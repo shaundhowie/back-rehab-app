@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2f6f62">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Back Rehab">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon.png">
+<title>Back & Sciatica Rehab</title>
+<style>
+:root{
+  --bg:#f5f3ee; --card:#ffffff; --ink:#1f2a28; --ink2:#5b6b67; --soft:#b9c4c0;
+  --accent:#2f6f62; --accent2:#e3efe9; --warn:#b5651d; --warnbg:#fbeee2; --stop:#a33b32; --stopbg:#f8e3e1;
+  --line:#e4e0d8; --radius:16px;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#141a19; --card:#1d2523; --ink:#e8efec; --ink2:#9fb0ab; --soft:#4f5f5b;
+    --accent:#6cc2ac; --accent2:#22332f; --warn:#e3a464; --warnbg:#33281c; --stop:#ec8a80; --stopbg:#3a2220; --line:#2b3532; }
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:560px;margin:0 auto;padding:16px 16px 96px}
+h1{font-size:24px;margin:4px 0 2px;letter-spacing:-.01em}
+h2{font-size:19px;margin:22px 0 10px}
+h3{font-size:16px;margin:0 0 4px}
+p{margin:0 0 10px}
+.sub{color:var(--ink2);font-size:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px;margin:10px 0}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 6px}
+.chip{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:8px 14px;font-size:14px;font-weight:600}
+.chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+@media (prefers-color-scheme: dark){.chip.on{color:#0f1715}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:12px;padding:13px 18px;font-size:16px;font-weight:650;background:var(--accent);color:#fff;cursor:pointer}
+@media (prefers-color-scheme: dark){.btn{color:#0f1715}}
+.btn.ghost{background:var(--accent2);color:var(--accent)}
+.btn.full{width:100%}
+.btn.small{padding:8px 12px;font-size:14px}
+.row{display:flex;gap:10px;align-items:center}
+.row > *{flex:1}
+.list-item{display:flex;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.list-item:first-child{border-top:0}
+.thumb{width:84px;flex:0 0 84px;background:radial-gradient(ellipse at 50% 30%,#a69d87,#6b6453 85%);border-radius:12px}
+.fig{display:block;width:100%;height:auto}
+.dose{font-size:13px;color:var(--ink2)}
+.tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--accent);background:var(--accent2);border-radius:6px;padding:2px 7px;margin-bottom:4px}
+.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;justify-content:center;padding-bottom:env(safe-area-inset-bottom)}
+.tabs button{flex:1;max-width:140px;background:none;border:0;color:var(--ink2);padding:10px 0 12px;font-size:12px;font-weight:600}
+.tabs button svg{display:block;margin:0 auto 3px;width:24px;height:24px}
+.tabs button.on{color:var(--accent)}
+.view{display:none}.view.on{display:block}
+.player{position:fixed;inset:0;background:var(--bg);z-index:20;display:none;overflow-y:auto}
+.player.on{display:block}
+.player .wrap{padding-bottom:40px}
+.stage{background:radial-gradient(ellipse at 50% 30%,#a69d87,#6b6453 80%);border-radius:20px;padding:12px 8px 4px;overflow:hidden}
+.stage .fig{max-height:46vh}
+.thumb{overflow:hidden;padding:4px 2px 0}
+.big{font-size:56px;font-weight:750;text-align:center;font-variant-numeric:tabular-nums;margin:6px 0}
+.progressbar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin:8px 0 14px}
+.progressbar > div{height:100%;background:var(--accent);transition:width .3s}
+ol.how{padding-left:20px;margin:6px 0 10px}ol.how li{margin:4px 0}
+.note{border-radius:12px;padding:10px 12px;font-size:14px;margin:8px 0}
+.note.good{background:var(--accent2)}
+.note.warn{background:var(--warnbg);color:var(--ink)}
+.note.stop{background:var(--stopbg);color:var(--ink)}
+.note b{display:block;margin-bottom:2px}
+input[type=range]{width:100%;accent-color:var(--accent)}
+input[type=text],input[type=url],input[type=date]{width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:16px}
+.grid28{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.day{aspect-ratio:1;border-radius:8px;background:var(--line);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--ink2)}
+.day.done{background:var(--accent);color:#fff}
+.day.today{outline:2px solid var(--accent);outline-offset:1px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;text-align:center}
+.stat b{display:block;font-size:24px}
+.stat span{font-size:12px;color:var(--ink2)}
+.seg{display:flex;gap:6px}.seg button{flex:1;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:10px 4px;border-radius:10px;font-size:13px;font-weight:600}
+.seg button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+details.ex{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);margin:10px 0;overflow:hidden}
+details.ex summary{list-style:none;display:flex;gap:12px;align-items:center;padding:12px;cursor:pointer}
+details.ex summary::-webkit-details-marker{display:none}
+details.ex .body{padding:0 14px 14px}
+.x{background:none;border:0;color:var(--ink2);font-size:28px;line-height:1;padding:4px 8px}
+.painlabel{display:flex;justify-content:space-between;font-size:12px;color:var(--ink2)}
+.reel{display:flex;gap:8px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}
+.reel:first-child{border-top:0}
+.reel a{flex:1;color:var(--accent);font-weight:600;text-decoration:none;word-break:break-word}
+.muted{color:var(--ink2)}
+.fig3d{display:block;width:100%;aspect-ratio:4/3;border-radius:20px;cursor:grab}
+.stage:has(canvas.fig3d){padding:0;background:radial-gradient(ellipse at 50% 35%,#a39a84,#5f5848 85%)}
+.hint3d{position:absolute;right:10px;bottom:10px;font-size:11px;font-weight:600;color:#fff;background:rgba(0,0,0,.35);padding:5px 9px;border-radius:999px;transition:opacity .8s;pointer-events:none}
+.builder{position:fixed;inset:0;z-index:25;background:var(--bg);display:none;flex-direction:column}
+.builder.on{display:flex}
+.bHead{display:flex;gap:8px;align-items:center;padding:10px 12px;border-bottom:1px solid var(--line);background:var(--card)}
+.bHead input{flex:1}
+.bPane{flex:1 1 50%;overflow-y:auto;padding:6px 12px;min-height:0}
+#bTop{background:var(--bg)}
+#bBottom{background:var(--card)}
+.paneLabel{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2);padding:6px 2px}
+.bDivider{padding:9px 12px;font-size:13px;color:var(--ink2);background:var(--accent2);text-align:center;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.brow{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px 8px 6px 4px;margin:6px 0}
+#bLib .brow{background:var(--bg)}
+.brow .thumb{width:58px;flex:0 0 58px}
+.brow .info{flex:1;min-width:0}
+.brow h3{font-size:15px;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brow .dose{font-size:12px}
+.handle{flex:0 0 36px;height:44px;display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--ink2);touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+.iconbtn{flex:0 0 auto;border:0;background:var(--accent2);color:var(--accent);width:36px;height:36px;border-radius:10px;font-size:20px;font-weight:700}
+.iconbtn.rm{background:transparent;color:var(--ink2);font-size:24px}
+.dosebtn{border:0;background:none;padding:0;color:var(--accent);font-weight:650;font-size:12px;text-decoration:underline dotted}
+.editor{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px 4px 4px;width:100%}
+.stepper{display:flex;align-items:center;justify-content:space-between;background:var(--bg);border-radius:10px;padding:4px}
+.stepper span{font-size:12px;color:var(--ink2);padding-left:6px}
+.stepper b{font-variant-numeric:tabular-nums;min-width:34px;text-align:center}
+.stepper button{border:0;background:var(--card);color:var(--ink);width:32px;height:32px;border-radius:8px;font-size:18px}
+.toggle{display:flex;align-items:center;justify-content:space-between;background:var(--bg);border-radius:10px;padding:4px 4px 4px 10px;font-size:12px;color:var(--ink2)}
+.toggle button{border:0;border-radius:8px;padding:8px 10px;font-weight:700;background:var(--card);color:var(--ink)}
+.toggle button.on{background:var(--accent);color:#fff}
+.placeholder{height:58px;border:2px dashed var(--accent);border-radius:12px;margin:6px 0;background:var(--accent2)}
+.dragGhost{position:fixed;z-index:50;pointer-events:none;box-shadow:0 10px 30px rgba(0,0,0,.3);opacity:.95;transform:rotate(-1.5deg)}
+.emptyDrop{border:2px dashed var(--line);border-radius:12px;padding:22px 12px;text-align:center;color:var(--ink2);font-size:14px;margin:6px 0}
+.wk{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px;margin:12px 0}
+.wk .strip{display:flex;gap:6px;margin:10px 0;overflow:hidden}
+.wk .strip .thumb{width:62px;flex:0 0 62px}
+.wk .acts{display:flex;gap:8px}
+.wk .acts .btn{flex:1}
+.wk .acts .btn.small{flex:0 0 auto}
+.tgt{font-size:13px;font-weight:700;color:#d9622d}
+@media (prefers-color-scheme: dark){.tgt{color:#ff8a75}}
+</style>
+</head>
+<body>
+
+<!-- WORKOUTS -->
+<section class="view on" id="v-today"><div class="wrap">
+  <div class="sub" id="dateLine"></div>
+  <h1>My workouts</h1>
+  <p class="sub">Build your own routines from the exercise list. Drag exercises in, put them in any order, and set your own reps.</p>
+  <button class="btn full" id="newWk" style="margin:8px 0 4px">＋ New workout</button>
+  <div id="wkList"></div>
+  <div class="note warn"><b>The golden rule</b>Leg pain moving <i>up</i> toward your back = good sign. Pain, tingling or numbness spreading <i>further down</i> the leg = stop that exercise and check the Safety tab.</div>
+</div></section>
+
+<!-- LIBRARY -->
+<section class="view" id="v-lib"><div class="wrap">
+  <h1>Exercises</h1>
+  <p class="sub">Tap any exercise for the how-to, what you should feel, and what to avoid.</p>
+  <div class="chips" id="libChips"></div>
+  <div id="libList"></div>
+  <h2>My saved reels</h2>
+  <div class="card">
+    <p class="sub">Paste links to your Instagram reels so they're one tap away during your routine.</p>
+    <input type="text" id="reelName" placeholder="Label, e.g. Physio's nerve floss">
+    <div style="height:8px"></div>
+    <input type="url" id="reelUrl" placeholder="https://www.instagram.com/reel/…">
+    <div style="height:8px"></div>
+    <button class="btn ghost full" id="reelAdd">Add reel</button>
+    <div id="reelList" style="margin-top:10px"></div>
+  </div>
+</div></section>
+
+<!-- PROGRESS -->
+<section class="view" id="v-prog"><div class="wrap">
+  <h1>Progress</h1>
+  <div class="stats" id="stats"></div>
+  <h2>Last 4 weeks</h2>
+  <div class="card"><div class="grid28" id="grid28"></div></div>
+  <h2>Pain trend</h2>
+  <div class="card" id="painChart"></div>
+  <h2>Settings</h2>
+  <div class="card">
+    <h3 style="margin-top:4px">Demo figure</h3>
+    <p class="sub">Choose how the exercise demos are drawn.</p>
+    <div class="row" style="margin-bottom:4px"><button class="btn small" data-fig="2d">2D</button><button class="btn small" data-fig="anatomy">3D anatomy</button><button class="btn small" data-fig="titan">3D titan</button></div>
+    <hr style="border:0;border-top:1px solid var(--line);margin:12px 0">
+    <h3 style="margin-top:4px">Backup & restore</h3>
+    <p class="sub">Save your workouts, history and reels to a file — keep it somewhere safe (e.g. iCloud Drive / Google Drive) so you can restore them on a new phone.</p>
+    <div class="row" style="margin-bottom:8px"><button class="btn small" id="bkBtn">⬇ Back up to file</button><button class="btn ghost small" id="rsBtn">⬆ Restore from file</button></div>
+    <input type="file" id="rsFile" accept=".json,application/json" style="display:none">
+    <p class="sub" id="bkMsg"></p>
+    <hr style="border:0;border-top:1px solid var(--line);margin:12px 0">
+    <button class="btn ghost small" id="resetBtn">Clear all my data</button>
+    <p class="sub" id="resetMsg" style="margin-top:8px"></p>
+    <p class="sub">Your log is saved in this browser on this device only.</p>
+  </div>
+</div></section>
+
+<!-- SAFETY -->
+<section class="view" id="v-safe"><div class="wrap">
+  <h1>Safety & how to progress</h1>
+  <div class="note stop"><b>Get urgent medical care (emergency department) if you have:</b>
+    Numbness in the groin, inner thighs or around the back passage ("saddle" area) · New trouble controlling your bladder or bowels · Rapidly worsening weakness in a leg or foot drop · Back pain with fever, unexplained weight loss, or after a significant fall or accident.</div>
+  <div class="note warn"><b>See your GP or a physio soon if:</b>
+    Leg pain is severe and not improving after 2–3 weeks · You notice weakness (e.g. catching your toe, foot slapping) · Pain wakes you every night · Symptoms are in both legs.</div>
+  <h2>Pain traffic light</h2>
+  <div class="card">
+    <p><b style="color:var(--accent)">0–3 / 10 — Green.</b> Fine to continue. Mild stretch or effort is normal.</p>
+    <p><b style="color:var(--warn)">4–5 / 10 — Amber.</b> Ease off: fewer reps, smaller range, shorter holds.</p>
+    <p style="margin:0"><b style="color:var(--stop)">6+ / 10, or symptoms spreading down the leg — Red.</b> Stop that exercise today. Retry it gently tomorrow; if it keeps happening, drop it and ask a physio.</p>
+  </div>
+  <h2>Key principles</h2>
+  <div class="card">
+    <p><b>Nerves like movement, not stretching.</b> Nerve glides should be smooth and easy, never held or pushed into strong tingling.</p>
+    <p><b>Centralisation is your compass.</b> If an exercise makes leg pain retreat toward your back, it's usually the right one for you — even if back pain briefly feels stronger.</p>
+    <p><b>Little and often beats hard and rare.</b> Doing the routine daily (or twice daily in Phase 1) matters more than intensity.</p>
+    <p><b>Keep walking.</b> Short, frequent walks are one of the best things for sciatica. Avoid long periods of sitting — get up every 30–45 minutes.</p>
+    <p style="margin:0"><b>Next-day check.</b> It's normal to feel muscles working. It's not okay if you're clearly worse the next morning — scale back.</p>
+  </div>
+  <h2>Building a good workout</h2>
+  <div class="card">
+    <p><b>A simple order that works:</b> 1) mobility (pelvic tilts, cat–cow) → 2) nerve glide → 3) strength & core → 4) stretches → 5) finish with a walk.</p>
+    <p><b>If you're in a flare-up:</b> keep it short and gentle — pelvic tilts, cat–cow, nerve glide, and either press-ups <i>or</i> knee-to-chest (whichever centralises your symptoms), then a walk.</p>
+    <p><b>As things settle:</b> add side planks and bird dogs plus glute bridges and dead bugs. Increase holds or reps only when today's numbers feel easy and you're fine the next morning.</p>
+    <p><b>Yoga & stretches:</b> great for flexibility and winding down. Back-bending poses (sphinx, cobra-style) suit most disc-related sciatica; forward folds (seated and standing fold) are the ones most likely to stir it up — bend your knees and skip them if leg symptoms increase.</p>
+    <p><b>Mobility vs stretching:</b> mobility drills are active — you move a joint through its range under control. They make an ideal warm-up (5–10 minutes) before strength work or a walk. Save longer static stretches for the end or for winding down.</p>
+    <p><b>Agility (skipping & ladders):</b> these are impact drills. Only add them once you can walk briskly for 30 minutes and do the strength work without pain or leg symptoms. Start with short rounds, land softly, and stop if anything jars your back or sends pain down the leg.</p>
+    <p style="margin:0"><b>Make two or three workouts</b> — e.g. a 5-minute "Desk break", a full "Morning routine" and a gentle "Bad day" version — so you always have something that suits how your back feels.</p>
+  </div>
+  <p class="sub">3D titan figure based on <a href="https://sketchfab.com/3d-models/spectral-titan-e313e2fd3e714831895a68cdf4bedbb2" target="_blank" rel="noopener">"Spectral Titan"</a> by <a href="https://sketchfab.com/jeraynor979" target="_blank" rel="noopener">jeraynor979</a>, licensed under <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> (reduced and rigged for this app).</p>
+  <p class="sub">3D anatomy figure based on <a href="https://sketchfab.com/3d-models/male-full-body-ecorche-ab11ebff89224f03bd75efede1164cf6" target="_blank" rel="noopener">"Male Full Body Ecorche"</a> by <a href="https://sketchfab.com/diegoluga" target="_blank" rel="noopener">Diego Luján García</a>, licensed under <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> (recoloured and rigged for this app).</p>
+  <p class="sub">This program is general education based on common physiotherapy approaches (McKenzie extension, neural mobilisation, and McGill core stabilisation). It isn't a diagnosis. If you can, have a physio check it suits your specific cause of sciatica.</p>
+</div></section>
+
+<!-- BUILDER -->
+<div class="builder" id="builder">
+  <div class="bHead">
+    <button class="x" id="bCancel" aria-label="Cancel">×</button>
+    <input type="text" id="bName" placeholder="Workout name" maxlength="40">
+    <button class="btn small" id="bSave">Save</button>
+  </div>
+  <div class="bPane" id="bTop"><div class="paneLabel">Your workout <span id="bCount"></span></div><div id="bList"></div></div>
+  <div class="bDivider">Exercises — drag <b>⠿</b> up into your workout, or tap ＋</div>
+  <div class="bPane" id="bBottom"><div class="chips" id="bChips" style="padding-top:6px"></div><div id="bLib"></div></div>
+</div>
+
+<!-- PLAYER -->
+<div class="player" id="player"><div class="wrap" id="playerInner"></div></div>
+
+<nav class="tabs">
+  <button class="on" data-v="today"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5l5 3.5-5 3.5z" fill="currentColor"/></svg>Workouts</button>
+  <button data-v="lib"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 5h16M4 12h16M4 19h10"/></svg>Exercises</button>
+  <button data-v="prog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Progress</button>
+  <button data-v="safe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M12 9v4M12 16.5v.01"/></svg>Safety</button>
+</nav>
+
+<script>
+/* ---------- storage (safe) ---------- */
+const store = {
+  get(k, d){ try{ const v = localStorage.getItem('br_'+k); return v==null ? d : JSON.parse(v); }catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem('br_'+k, JSON.stringify(v)); }catch(e){} }
+};
+
+/* ---------- figure poses ---------- */
+const P = (base, over) => Object.assign({}, base, over);
+const S = {head:[40,93],sh:[53,97],mid:[73,97],hip:[93,97],kn:[113,77],ft:[133,101],el:[70,99],hd:[86,99]};
+const Q = {hd:[60,102],el:[60,82],sh:[60,62],mid:[85,62],hip:[110,62],kn:[110,102],ft:[140,102],head:[47,56]};
+const PR = {head:[40,92],sh:[54,97],mid:[74,99],hip:[94,99],kn:[122,100],ft:[150,100],el:[64,88],hd:[56,102]};
+
+const EX = {
+ tilt:{name:"Pelvic tilts",area:"Mobility",period:3000,
+  A:P(S,{mid:[73,98.4],sh:[53,98.2],head:[40,94]}), B:P(S,{hip:[93,92],mid:[73,97.4],sh:[53,98.2],head:[40,94]}),
+  why:"Gently moves each lumbar joint and reduces stiffness without loading the nerve.",
+  how:["Lie on your back, knees bent, feet flat and arms by your sides.","Keep your back flat on the floor and your legs still.","Tilt your pelvis back so your hips lift just slightly off the floor (tailbone curls up).","Lower slowly and repeat, small and pain-free."],
+  feel:"Easy movement in the low back.", avoid:"Lifting your hips off the floor or pushing into pain."},
+ k2c:{name:"Knee to chest",area:"Stretch",period:4000,
+  A:P(S,{}), B:P(S,{kn:[84,70],ft:[104,77],el:[66,84],hd:[84,72],knF:[113,77],ftF:[133,101]}),
+  why:"Opens the low back and eases muscle guarding. Often soothing in the early phase.",
+  how:["Lie on your back with both knees bent.","Hold behind one thigh and gently draw that knee toward your chest.","Hold, breathing slowly, then lower and swap legs."],
+  feel:"A mild stretch in the low back and buttock.", avoid:"If this sends pain down the leg, skip it — some people's sciatica prefers extension (the press-up) instead."},
+ glide:{name:"Sciatic nerve glide (seated)",area:"Nerve",period:3000,props:["chair"],
+  A:{head:[96,24],sh:[88,32],hip:[90,72],kn:[118,72],ft:[116,102],knF:[116,73],ftF:[114,102],el:[96,52],hd:[110,66]},
+  B:{head:[86,19],sh:[88,32],hip:[90,72],kn:[118,72],ft:[145,80],knF:[116,73],ftF:[114,102],el:[96,52],hd:[110,66]},
+  why:"'Flosses' the sciatic nerve so it slides freely through tight tissue. Reduces nerve sensitivity rather than stretching it.",
+  how:["Sit tall on a chair, slight slump through your upper back.","Straighten the knee of the sore leg while looking up toward the ceiling.","Bend the knee back down while bringing your chin toward your chest.","Keep it rhythmic: about 1 second each way, like a slow pendulum."],
+  feel:"At most a mild pull or brief tingle that eases straight away.", avoid:"Holding the end position, or pushing into strong or lingering tingling. Less is more."},
+ catcow:{name:"Cat–cow",area:"Mobility",period:4500,
+  A:P(Q,{mid:[85,70],head:[45,51]}), B:P(Q,{mid:[85,52],head:[50,74]}),
+  why:"Moves the whole spine through flexion and extension, warming up and easing stiffness.",
+  how:["On hands and knees, hands under shoulders, knees under hips.","Breathe in: let your belly drop and look slightly forward (cow).","Breathe out: round your back up toward the ceiling and tuck your chin (cat).","Move slowly and only as far as is comfortable."],
+  feel:"Smooth movement through the back.", avoid:"Forcing the end range; keep it fluid."},
+ child:{name:"Child's pose",area:"Stretch",period:5000,
+  A:P(Q,{}), B:{hip:[126,86],mid:[100,91],sh:[76,94],el:[58,100],hd:[38,102],head:[63,96],kn:[110,102],ft:[140,102]},
+  why:"A restful stretch for the back muscles and hips.",
+  how:["From hands and knees, sit your hips back toward your heels.","Walk your hands forward and let your chest sink.","Breathe slowly into your lower back."],
+  feel:"Gentle lengthening along the back.", avoid:"If bending forward sends pain down your leg, skip this one."},
+ press:{name:"Prone press-up",area:"Extension",period:4000,
+  A:P(PR,{}), B:P(PR,{head:[46,58],sh:[56,70],mid:[76,90],el:[58,86],hd:[56,102]}),
+  why:"McKenzie extension. For many disc-related sciatica cases this 'centralises' leg pain back toward the spine.",
+  how:["Lie face down. Start propped on your elbows for 1–2 minutes if that's enough.","Place hands under your shoulders and press up, keeping hips and pelvis on the floor.","Let your low back sag and relax — the arms do the work.","Pause 1–2 seconds at the top, then lower slowly."],
+  feel:"Back discomfort is OK. Leg pain easing or moving up toward the back is the goal.", avoid:"Stop if leg pain spreads further down. Not for everyone — use the centralisation rule."},
+ bridge:{name:"Glute bridge",area:"Strength",period:4000,
+  A:P(S,{}), B:P(S,{hip:[94,78],mid:[72,88],kn:[118,70]}),
+  why:"Strong glutes take load off the lower back and support the pelvis.",
+  how:["Lie on your back, knees bent, feet hip-width apart.","Brace gently, then squeeze your buttocks and lift your hips until body forms a line from shoulders to knees.","Hold for 2–3 seconds, then lower slowly.","Phase 3: progress to a single-leg bridge."],
+  feel:"Work in your buttocks and back of thighs.", avoid:"Arching the low back at the top — lift with the glutes, not the spine."},
+ birddog:{name:"Bird dog",area:"Core (McGill)",period:5000,
+  A:P(Q,{elF:[60,82],hdF:[60,102]}), B:P(Q,{el:[40,61],hd:[21,60],knF:[136,62],ftF:[164,62],elF:[60,82],hdF:[60,102]}),
+  why:"One of McGill's 'Big 3'. Builds back endurance while keeping the spine still and safe.",
+  how:["On hands and knees, gently brace.","Slowly reach one arm forward and the opposite leg back, keeping your back flat — imagine a cup of tea on it.","Hold, then return and swap sides."],
+  feel:"Back and buttock muscles working, body steady.", avoid:"Twisting the hips or arching to lift the leg higher."},
+ deadbug:{name:"Dead bug",area:"Core",period:5000,
+  A:{head:[40,93],sh:[53,97],mid:[73,97],hip:[93,97],kn:[93,69],ft:[121,69],el:[53,79],hd:[53,61],elF:[55,79],hdF:[55,61]},
+  B:{head:[40,93],sh:[53,97],mid:[73,97],hip:[93,97],kn:[93,69],ft:[121,69],el:[35,90],hd:[17,94],elF:[55,79],hdF:[55,61],knF:[120,91],ftF:[148,95]},
+  why:"Trains the deep core to control the pelvis while the limbs move.",
+  how:["Lie on your back, arms pointing to the ceiling, hips and knees bent to 90°.","Brace so your low back stays gently pressed into the floor.","Slowly lower one arm overhead and the opposite leg toward the floor.","Return and swap. Only go as low as you can without your back arching."],
+  feel:"Deep tummy muscles working.", avoid:"Low back lifting off the floor. Shorten the range instead."},
+ sideplank:{name:"Side plank",area:"Core (McGill)",period:5000,
+  A:{head:[43,66.5],sh:[54,70.5],el:[54,102],hd:[72,102],mid:[77,77.5],hip:[100,84.3],kn:[126,92.2],ft:[152,100],knF:[126,92.2],ftF:[152,100],elF:[74,68.5],hdF:[97,77]},
+  B:{head:[43,66.5],sh:[54,70.5],el:[54,102],hd:[72,102],mid:[77,77.5],hip:[100,84.3],kn:[126,92.2],ft:[152,100],knF:[126,92.2],ftF:[152,100],elF:[74,68.5],hdF:[97,77]},
+  why:"The third 'Big 3' exercise — trains the side muscles (quadratus lumborum) that stabilise the lower back.",
+  how:["Lie on your side with your legs straight and feet stacked, propped on your forearm with the elbow directly under your shoulder.","Brace and lift your hips so your body makes one straight line from shoulder to ankle — only your forearm and the side of your bottom foot touch the floor.","Rest your top hand on your hip and hold still, breathing steadily.","Lower with control, rest, then switch sides."],
+  feel:"Work along the side of your trunk and hip.", avoid:"Hips sagging or rolling backward."},
+ fig4:{name:"Figure-4 stretch (lying)",area:"Stretch",period:5000,
+  A:{head:[40,93],sh:[53,97],mid:[73,97],hip:[93,97],kn:[101,70],ft:[113,77],knF:[113,77],ftF:[133,101],el:[70,99],hd:[86,99]},
+  B:{head:[40,92],sh:[53,97],mid:[73,97],hip:[93,97],kn:[95,68],ft:[104,70],knF:[102,71],ftF:[124,72],el:[72,84],hd:[94,76]},
+  why:"Stretches the piriformis and deep hip muscles, which can irritate the sciatic nerve when tight. Lying down keeps your back fully supported.",
+  how:["Lie on your back with both knees bent, feet flat.","Cross the ankle of the sore side over the opposite knee, letting that knee fall out to the side.","Thread your hands behind the thigh of the bottom leg and gently draw it toward your chest.","Keep your head and tailbone on the floor. Hold and breathe, then switch sides.","Easier option: leave the bottom foot on the floor and just press the crossed knee gently away."],
+  feel:"A stretch deep in the buttock of the crossed leg.", avoid:"Lifting your head or tailbone off the floor, or any sharp pain or tingling down the leg."},
+ hipflex:{name:"Half-kneeling hip flexor stretch",area:"Stretch",period:5000,
+  A:{head:[103,22],sh:[102,34],hip:[102,74],kn:[112,102],ft:[138,102],knF:[76,76],ftF:[74,102],el:[110,56],hd:[104,72]},
+  B:{head:[95,24],sh:[94,36],hip:[94,76],kn:[112,102],ft:[138,102],knF:[69,80],ftF:[72,102],el:[102,58],hd:[96,74]},
+  why:"Tight hip flexors from sitting pull on the lumbar spine. Loosening them reduces that strain.",
+  how:["Kneel on one knee (use a cushion), other foot flat in front.","Tuck your tailbone under and squeeze the buttock of the kneeling side.","Shift gently forward until you feel a stretch at the front of the hip.","Hold, then swap sides."],
+  feel:"Stretch at the front of the kneeling hip.", avoid:"Arching your low back to get further forward."},
+ hams:{name:"Hamstring stretch with strap",area:"Stretch",period:5000,props:["strap"],
+  A:P(S,{kn:[116,81],ft:[139,65],knF:[121,99],ftF:[149,99],el:[62,86],hd:[72,79]}),
+  B:P(S,{kn:[107,73],ft:[121,49],knF:[121,99],ftF:[149,99],el:[62,86],hd:[74,77]}),
+  why:"Tight hamstrings limit hip movement and load the back. Done gently, it also mobilises the nerve.",
+  how:["Lie on your back, strap or towel around one foot.","Raise the leg with the knee nearly straight until you feel a mild stretch.","Hold and breathe. Point the toes away (not toward you) to keep it easy on the nerve."],
+  feel:"Mild stretch at the back of the thigh.", avoid:"Pulling into tingling or calf/foot symptoms — lower the leg."},
+
+ worlds:{name:"World's greatest stretch",area:"Stretch",period:5000,
+  A:{head:[138,56],sh:[128,62],hip:[100,84],kn:[126,80],ft:[127,103],knF:[78,94],ftF:[54,102],el:[133,78],hd:[134,93],elF:[125,80],hdF:[122,101]},
+  B:{head:[137,54],sh:[128,62],hip:[100,84],kn:[126,80],ft:[127,103],knF:[78,94],ftF:[54,102],el:[131,44],hd:[134,26],elF:[125,80],hdF:[122,101]},
+  why:"One move that opens the hip flexors, hamstrings, groin and upper back at once. A favourite warm-up because it takes the hips and mid-back through rotation without loading the lower back.",
+  how:["Step into a long lunge, right foot forward, back knee off the floor (or down on a cushion if easier).","Place your left hand on the floor inside your front foot.","Drop your right elbow down toward the inside of your right foot — gently, no forcing.","Rotate your chest open and reach your right arm up to the ceiling, eyes following your hand.","Return the hand to the floor. Do your reps, then switch sides."],
+  feel:"Stretch at the front of the back hip, inner thigh and through the upper back as you rotate.", avoid:"Twisting from the lower back — rotate through the chest. Put the back knee down if your hips or back complain."},
+ downdog:{name:"Downward dog",area:"Yoga",period:5000,
+  A:{head:[64,84],sh:[76,76],hip:[114,50],kn:[127,77],ft:[140,103],el:[61,90],hd:[46,103]},
+  B:{head:[64,84],sh:[76,76],hip:[114,50],kn:[127,77],ft:[140,103],el:[61,90],hd:[46,103]},
+  why:"Lengthens the hamstrings, calves and spine while strengthening the shoulders. Bent knees make it back-friendly.",
+  how:["Start on hands and knees, toes tucked.","Lift your hips up and back so your body makes an upside-down V.","Keep knees bent at first and focus on a long, straight back.","Hold still and breathe, letting your heels sink toward the floor."],
+  feel:"Stretch through the backs of the legs and along the spine.", avoid:"Rounding the low back to get heels down — keep knees bent. Ease off if leg tingling increases."},
+ sphinx:{name:"Sphinx pose",area:"Yoga",period:6000,
+  A:{head:[43,82],sh:[55,90],mid:[75,97],hip:[94,99],kn:[122,100],ft:[150,100],el:[57,103],hd:[36,103]},
+  B:{head:[45,71],sh:[56,82],mid:[76,95],hip:[94,99],kn:[122,100],ft:[150,100],el:[58,102],hd:[36,103]},
+  why:"A gentle, sustained extension for the lower back — the yoga cousin of the press-up and often soothing for disc-related sciatica.",
+  how:["Lie on your front, forearms on the floor, elbows under your shoulders.","Lift your chest, keeping your hips and legs heavy and relaxed.","Draw your shoulders gently down away from your ears and breathe."],
+  feel:"Mild pressure or stretch in the low back; leg symptoms easing or moving up.", avoid:"Clenching the buttocks or shrugging. Stop if leg pain spreads further down."},
+ lowlunge:{name:"Low lunge (crescent)",area:"Yoga",period:5000,
+  A:{head:[101,22],sh:[100,34],hip:[100,74],kn:[126,76],ft:[128,103],knF:[90,101],ftF:[64,103],el:[110,50],hd:[122,66],elF:[108,52],hdF:[120,66]},
+  B:{head:[98,24],sh:[100,36],hip:[104,76],kn:[127,77],ft:[128,103],knF:[90,101],ftF:[64,103],el:[100,18],hd:[100,0],elF:[103,18],hdF:[104,0]},
+  why:"Deeply stretches the hip flexors of the back leg, which tighten with sitting and tug on the lumbar spine.",
+  how:["Kneel and step one foot forward into a lunge, back knee on a cushion.","Tuck your tailbone slightly and squeeze the back-leg buttock.","Shift your hips gently forward, then lift your arms overhead if comfortable.","Hold, breathe, and switch sides."],
+  feel:"Stretch at the front of the back hip and thigh.", avoid:"Arching or crunching the lower back to go deeper — keep the tailbone tucked."},
+ pigeon:{name:"Pigeon pose",area:"Yoga",period:6000,
+  A:{head:[106,40],sh:[104,52],hip:[98,90],kn:[118,100],ft:[96,102],knF:[70,100],ftF:[42,103],el:[109,70],hd:[113,92],elF:[106,70],hdF:[110,92]},
+  B:{head:[142,82],sh:[130,82],mid:[114,88],hip:[98,90],kn:[118,100],ft:[96,102],knF:[70,100],ftF:[42,103],el:[142,96],hd:[158,102],elF:[140,96],hdF:[156,102]},
+  why:"A deep stretch for the glutes and piriformis, the muscle the sciatic nerve runs beside or through.",
+  how:["From hands and knees, bring one knee forward behind the same-side wrist, shin angled across.","Slide the other leg straight back.","Keep hips level (put a cushion under the front hip if it lifts).","Stay upright on your hands, or walk them forward to fold over the front leg."],
+  feel:"Strong stretch deep in the front-leg buttock.", avoid:"Knee pain or increased leg tingling — use the lying figure-4 stretch instead, which is gentler."},
+ happybaby:{name:"Happy baby",area:"Yoga",period:5000,
+  A:{head:[40,93],sh:[53,97],mid:[73,97],hip:[93,97],kn:[76,84],ft:[80,58],el:[68,76],hd:[80,58]},
+  B:{head:[40,93],sh:[53,97],mid:[73,97],hip:[93,97],kn:[76,84],ft:[80,58],el:[68,76],hd:[80,58]},
+  why:"Opens the hips and lets the lower back release into the floor.",
+  how:["Lie on your back and draw both knees toward your armpits.","Hold the outsides of your feet (or your shins/thighs), soles facing the ceiling.","Gently pull your knees down toward your armpits, keep your tailbone heavy on the floor, and hold still while you breathe."],
+  feel:"Stretch in the inner thighs, hips and low back.", avoid:"Lifting the tailbone or straining the neck — hold behind the thighs instead."},
+ seatfold:{name:"Seated forward fold",area:"Yoga",period:6000,
+  A:{head:[82,46],sh:[80,58],hip:[80,98],kn:[108,98],ft:[136,99],el:[90,76],hd:[104,90]},
+  B:{head:[124,73],sh:[113,78],mid:[100,84],hip:[80,98],kn:[108,98],ft:[136,99],el:[126,90],hd:[138,95]},
+  why:"Stretches the hamstrings and the whole back of the body.",
+  how:["Sit with legs out in front, knees bent as much as you need.","Sit tall, then hinge forward from your hips, reaching toward your shins or feet.","Hold where you feel a mild stretch and breathe."],
+  feel:"Stretch along the backs of the legs.", avoid:"Can aggravate disc-related sciatica. Keep knees bent, hinge from the hips not the waist, and skip it if leg symptoms increase."},
+ standfold:{name:"Standing forward fold",area:"Yoga",period:6000,
+  A:{head:[101,12],sh:[100,24],hip:[100,60],kn:[102,82],ft:[100,104],el:[100,42],hd:[101,58]},
+  B:{head:[112,96],sh:[109,83],mid:[104,68],hip:[95,56],kn:[104,80],ft:[100,104],el:[114,96],hd:[120,103]},
+  why:"Releases the back and hamstrings and lets the spine hang under its own weight.",
+  how:["Stand with feet hip-width, knees soft.","Hinge from your hips and let your upper body hang, hands to shins, blocks or the floor.","Shake your head 'yes' and 'no' gently to relax the neck.","Roll up slowly, one vertebra at a time."],
+  feel:"Stretch through the backs of the legs and back.", avoid:"Locking the knees, and use caution with sciatica — bend the knees a lot, and skip it if leg symptoms increase."},
+ tree:{name:"Tree pose",area:"Yoga",period:5000,
+  A:{head:[101,12],sh:[100,24],hip:[100,60],kn:[118,74],ft:[102,74],knF:[100,82],ftF:[100,104],el:[110,44],hd:[110,34],elF:[108,44],hdF:[109,34]},
+  B:{head:[101,12],sh:[100,24],hip:[100,60],kn:[118,74],ft:[102,74],knF:[100,82],ftF:[100,104],el:[104,6],hd:[106,-12],elF:[100,6],hdF:[101,-12]},
+  why:"Builds balance, ankle strength and core control — all of which protect the back in daily life.",
+  how:["Stand tall and shift your weight onto one foot.","Place the other foot on your ankle, calf or inner thigh (never on the knee).","Hands together at the chest; raise them overhead if steady.","Fix your eyes on one point. Hold, then switch."],
+  feel:"Standing leg and deep core working to keep you steady.", avoid:"Pressing the foot on the knee joint. Stand near a wall for support."},
+ warrior2:{name:"Warrior II",area:"Yoga",period:5000,
+  A:{head:[101,14],sh:[100,26],hip:[100,64],kn:[124,74],ft:[128,103],knF:[84,84],ftF:[66,104],el:[104,44],hd:[108,60],elF:[96,44],hdF:[93,60]},
+  B:{head:[101,17],sh:[100,29],hip:[100,68],kn:[124,77],ft:[128,103],knF:[84,86],ftF:[66,104],el:[119,29],hd:[137,29],elF:[81,29],hdF:[63,29]},
+  why:"Strengthens the legs and glutes and builds endurance in the trunk muscles in a stable, upright position.",
+  how:["Step your feet wide. Turn the front foot forward and the back foot slightly in.","Bend the front knee so it tracks over the ankle.","Stretch your arms out at shoulder height, gaze over the front hand.","Keep your trunk upright over the hips. Hold, then switch sides."],
+  feel:"Front thigh and glutes working; stretch in the back-leg groin.", avoid:"Front knee collapsing inward or leaning the trunk forward."},
+ butterfly:{name:"Butterfly (bound angle)",area:"Yoga",period:5000,
+  A:{head:[87,46],sh:[86,58],hip:[86,98],kn:[108,80],ft:[100,102],el:[92,80],hd:[100,98]},
+  B:{head:[100,50],sh:[96,61],mid:[89,80],hip:[86,98],kn:[112,92],ft:[100,102],el:[96,82],hd:[100,98]},
+  why:"Opens the inner thighs and hips, which often tighten when you're protecting a sore back.",
+  how:["Sit with the soles of your feet together, knees falling out to the sides.","Hold your ankles or feet and sit tall.","Let the knees relax down — don't push them.","For more stretch, hinge forward with a long back."],
+  feel:"Stretch in the inner thighs and groin.", avoid:"Rounding hard through the back. Sit on a cushion if your low back slumps."},
+ legsup:{name:"Legs up the wall",area:"Yoga",period:6000,props:["wall"],
+  A:{head:[40,93],sh:[53,97],mid:[73,96],hip:[93,98],kn:[95,72],ft:[95,46],el:[66,90],hd:[80,91]},
+  B:{head:[40,93],sh:[53,97],mid:[73,92],hip:[93,98],kn:[95,72],ft:[95,46],el:[66,88],hd:[80,87]},
+  why:"A restful pose that unloads the spine and calms the nervous system. Great at the end of a session or before bed.",
+  how:["Sit side-on to a wall, then swing your legs up as you lie back.","Shuffle your buttocks close to the wall (or a little away if your hamstrings are tight).","Rest your hands on your belly and breathe slowly for a few minutes."],
+  feel:"Relaxation; light stretch at the backs of the legs.", avoid:"If the legs tingle or go numb, bend the knees or come down."},
+ couch:{name:"Couch stretch",area:"Stretch",period:6000,props:["couch"],
+  A:{head:[114,31],sh:[110,43],hip:[96,79],kn:[122,78],ft:[124,103],knF:[78,101],ftF:[76,73],el:[118,59],hd:[122,73],elF:[116,60],hdF:[120,73]},
+  B:{head:[100,27],sh:[99,39],hip:[99,79],kn:[123,78],ft:[124,103],knF:[78,101],ftF:[76,73],el:[107,56],hd:[102,72],elF:[105,56],hdF:[100,72]},
+  why:"The most intense stretch for the hip flexors and quads of the back leg. Freeing these muscles reduces the forward pull on the pelvis that loads the lower back after lots of sitting.",
+  how:["Kneel facing away from a couch (or wall), with a cushion under your knee.","Slide one knee back into the corner so that shin runs up the couch, top of the foot resting on it.","Step the other foot forward into a lunge, front shin vertical.","Start leaning forward with hands on your front knee. Then, if comfortable, tuck your tailbone, squeeze the back-leg buttock and slowly bring your trunk upright.","Hold, breathe, then switch sides."],
+  feel:"A strong stretch along the front of the back thigh and hip.", avoid:"Arching the lower back to get upright — stay leaning forward until the hip allows it. Skip it if the kneeling knee hurts."},
+ frog:{name:"Frog stretch (standing)",area:"Stretch",period:6000,
+  A:{head:[100,12],sh:[100,24],hip:[100,61],kn:[115,82],ft:[124,103],knF:[85,82],ftF:[76,103],el:[113,48],hd:[101,45],elF:[87,48],hdF:[99,45]},
+  B:{head:[100,40],sh:[100,52],hip:[100,84],kn:[130,76],ft:[124,103],knF:[70,76],ftF:[76,103],el:[117,70],hd:[101,64],elF:[83,70],hdF:[99,64]},
+  why:"Opens the inner thighs (adductors) and hips in a deep, upright squat — without kneeling on the floor.",
+  how:["Stand with feet wide (wider than shoulders), toes turned out, hands together at your chest.","Keeping your chest up and back straight, sink your hips down into a deep, wide squat.","At the bottom, press your elbows against the inside of your knees to ease them apart.","Hold and breathe, staying upright, then stand back up."],
+  feel:"Stretch in the inner thighs and groin.", avoid:"Knees caving in, heels lifting, or rounding forward. Only squat as deep as is comfortable — stop if leg symptoms increase."},
+ quadstand:{name:"Standing quad stretch",area:"Stretch",period:5000,
+  A:{head:[101,12],sh:[100,24],hip:[100,60],kn:[103,86],ft:[88,96],knF:[100,82],ftF:[100,104],el:[96,46],hd:[90,74],elF:[116,40],hdF:[130,46]},
+  B:{head:[101,12],sh:[100,24],hip:[100,60],kn:[101,88],ft:[86,70],knF:[100,82],ftF:[100,104],el:[94,48],hd:[87,68],elF:[116,40],hdF:[130,46]},
+  why:"Stretches the quads and hip flexor, which pull the pelvis forward and increase load on the lower back.",
+  how:["Stand tall, holding a wall or chair with one hand.","Bend one knee and hold that foot behind you.","Keep knees together and tuck your tailbone slightly — that's where the stretch comes from.","Hold, then switch."],
+  feel:"Stretch along the front of the thigh and hip.", avoid:"Arching the low back or yanking the heel to the buttock."},
+ shcars:{"name": "Shoulder CARs", "area": "Shoulders", "period": 5000, "A": {"head": [101, 12], "sh": [100, 24], "hip": [100, 60], "kn": [101, 82], "ft": [100, 104], "el": [119, 24], "hd": [137, 24]}, "B": {"head": [101, 12], "sh": [100, 24], "hip": [100, 60], "kn": [101, 82], "ft": [100, 104], "el": [103, 6], "hd": [105, -12]}, "why": "Controlled articular rotations take the shoulder joint slowly through its full circle, keeping the joint capsule healthy and the muscles in control at end range.", "how": ["Stand tall, brace gently so your ribs and lower back don't move.", "Make a fist with one hand and slowly raise the straight arm forward and up overhead.", "Keep reaching as you turn the palm out and sweep the arm back and down behind you in the biggest circle you can control.", "Reverse the direction for the next rep. Go slowly — 10–15 seconds per circle."], "feel": "The shoulder working through its whole range; maybe some clicks without pain.", "avoid": "Arching your lower back or twisting the body to get the arm further. Stay within a pain-free range."},
+ wallslide:{"name": "Wall slides", "area": "Shoulders", "period": 4000, "A": {"head": [98, 12], "sh": [97, 24], "hip": [97, 60], "kn": [98, 82], "ft": [98, 104], "el": [99, 26], "hd": [99, 8]}, "B": {"head": [98, 12], "sh": [97, 24], "hip": [97, 60], "kn": [98, 82], "ft": [98, 104], "el": [98, 6], "hd": [99, -12]}, "why": "Improves overhead shoulder motion and trains the shoulder blades to rotate upward while your upper back stays upright.", "how": ["Stand with your back, head and buttocks against a wall, feet a small step forward.", "Raise your arms into a 'goalpost' (elbows at shoulder height, bent 90°), backs of the hands toward the wall.", "Gently flatten your lower back toward the wall.", "Slide your arms up as far as you can without your back arching, then slide back down."], "feel": "Work between the shoulder blades and a stretch across the chest.", "avoid": "Letting the lower back peel off the wall — only go as high as you can keep it flat.", "props": ["wallback"]},
+ hip9090:{"name": "90/90 hip switches", "area": "Hips", "period": 4000, "A": {"head": [91, 46], "sh": [90, 58], "hip": [90, 96], "kn": [108, 74], "ft": [124, 100], "el": [80, 80], "hd": [72, 100]}, "B": {"head": [91, 46], "sh": [90, 58], "hip": [90, 96], "kn": [112, 93], "ft": [122, 102], "knF": [100, 92], "ftF": [80, 100], "el": [80, 80], "hd": [72, 100]}, "why": "Moves both hips through internal and external rotation — two ranges that often get stiff and can contribute to back and hip pain.", "how": ["Sit on the floor with knees bent and feet planted wider than your hips. Lean back on your hands.", "Let both knees drop to one side so one leg ends with the shin in front and the other with the shin out to the side (both knees at about 90°).", "Lift the knees back up through the middle and drop them to the other side.", "As it gets easier, sit taller and take the hands off the floor."], "feel": "Rotation in the hip joints; stretch in the outer and front of the hips.", "avoid": "Forcing the knees down. Sit on a cushion if your back slumps."},
+ crabreach:{"name": "Crab reach", "area": "Mobility", "period": 5000, "A": {"head": [66, 56], "sh": [74, 66], "hip": [96, 94], "kn": [120, 74], "ft": [130, 103], "el": [67, 84], "hd": [60, 102], "elF": [67, 84], "hdF": [60, 102]}, "B": {"head": [55, 84], "sh": [64, 76], "mid": [82, 66], "hip": [100, 66], "kn": [124, 72], "ft": [130, 103], "el": [56, 60], "hd": [40, 52], "elF": [62, 90], "hdF": [60, 102]}, "why": "Combines hip extension with upper-back rotation and a big shoulder reach — it opens the front of the hips and chest that get tight from sitting, while the glutes do the lifting.", "how": ["Sit with knees bent, feet flat, and hands on the floor behind you, fingers pointing back.", "Press through one hand and both feet and drive your hips up toward the ceiling.", "As the hips rise, reach the other arm up and over your head, turning your chest toward the floor.", "Lower the hips and bring the arm back down. Alternate sides."], "feel": "Stretch through the front of the hips, chest and shoulder; glutes working to lift.", "avoid": "Letting the hips sag or cranking the lower back. Skip it if your wrist or the supporting shoulder hurts."}, 
+ squathams:{"name": "Low squat to hamstring extension", "area": "Mobility", "period": 5000, "A": {"head": [124, 58], "sh": [116, 68], "mid": [104, 80], "hip": [94, 92], "kn": [120, 82], "ft": [102, 104], "el": [114, 86], "hd": [106, 103]}, "B": {"head": [117, 96], "sh": [114, 84], "mid": [106, 68], "hip": [96, 58], "kn": [101, 81], "ft": [100, 104], "el": [111, 94], "hd": [107, 103]}, "why": "Links a deep squat for the hips and ankles with a hamstring lengthen — two of the most commonly stiff areas in one flowing drill.", "how": ["Squat down low and grab your toes (or shins), elbows inside your knees, chest up.", "Keeping hold of your feet, slowly lift your hips and straighten your legs as far as you can.", "Pause where you feel the hamstrings stretch, then sink back down into the squat.", "Move slowly — about 3 seconds each way."], "feel": "Hips and ankles opening at the bottom; hamstrings stretching at the top.", "avoid": "With sciatica, don't fully lock the knees — stop short where the stretch is mild and skip it if leg symptoms increase."},
+ tyson:{name:"Tyson push-up",area:"Mobility",period:5000,
+  A:{head:[68,68],sh:[79,72],mid:[103,63],hip:[126,59],kn:[112,80],ft:[148,103],el:[65,88],hd:[52,103]},
+  B:{head:[33,90],sh:[45,94],mid:[65,96],hip:[84,97.5],kn:[116,100],ft:[148,103],el:[56,101],hd:[52,103]},
+  why:"Flows from a deep sit-back (hips, knees, ankles and shoulders all opening) straight into a push-up, so you build shoulder and trunk strength while moving the hips and spine through a big, controlled range.",
+  how:["Start in a push-up position, hands under your shoulders, toes tucked under. Your feet stay in this exact spot for the whole movement. (Optional: heels pressed against a wall.)","Keeping your arms straight, sit your hips back toward your heels into a deep squat — chest toward your thighs, arms reaching long.","Drive forward from the legs, lowering your chest toward the floor between your hands as you go.","Press back up into the push-up position, then sit back again in one smooth flow."],
+  feel:"Shoulders, chest and arms working; a stretch through the hips, ankles and upper back as you sit back.", avoid:"Letting your lower back sag at the bottom of the push-up — keep your trunk braced. Do them from your knees, or skip the push-up part, if your back complains."},
+ hipstep:{"name": "Quadruped hip rotation step-through", "area": "Mobility", "period": 4500, "props": ["rollerup"], "A": {"hd": [140, 102], "el": [140, 82], "sh": [140, 62], "mid": [116, 62], "hip": [92, 62], "head": [153, 56], "knF": [92, 102], "ftF": [64, 102], "kn": [92, 101], "ft": [64, 101]}, "B": {"hd": [140, 102], "el": [140, 82], "sh": [140, 62], "mid": [116, 61], "hip": [92, 60], "head": [153, 55], "knF": [92, 102], "ftF": [64, 102], "kn": [58, 52], "ft": [52, 24]}, "why": "Asks the hip for its rotation and flexion range back. When the hip stops rotating, that twisting gets handed up to the lower back, which isn't built for it — so restoring hip rotation can take load off a sore back. One side is usually clearly stiffer: that's often the side your back has been covering for.", "how": ["Start on hands and knees: hands under shoulders, knees under hips. Stand a foam roller (or a water bottle) upright just outside one knee.", "Lift that knee and draw a big, slow circle around the roller: forward past the front of it, out and over the top, then back behind it and down to the start.", "On the next rep reverse the circle: back behind the roller first, over the top, then around the front and home.", "Keep both hands and the other knee planted and your back flat like a table \u2014 the movement comes from the hip, not the spine.", "Do about one minute each side and notice which hip feels stiffer."], "feel": "Rotation and opening deep in the hip joint; a stretch in the groin and front of the hip as you step through.", "avoid": "Twisting or sagging through the lower back — keep your trunk steady and let the hip do the moving. Ease off if the knee on the floor is uncomfortable (use a cushion)."},
+ skip:{"name": "Skipping (jump rope)", "area": "Agility", "period": 700, "props": ["rope"], "A": {"head": [101, 15], "sh": [100, 27], "hip": [100, 62], "kn": [103, 83], "ft": [100, 103], "knF": [100, 83], "ftF": [98, 103], "el": [106, 44], "hd": [114, 58], "elF": [94, 44], "hdF": [86, 58], "r1": [142, -26], "r2": [58, -26]}, "B": {"head": [101, 8], "sh": [100, 20], "hip": [100, 55], "kn": [102, 76], "ft": [101, 97], "knF": [99, 76], "ftF": [99, 97], "el": [106, 37], "hd": [114, 51], "elF": [94, 37], "hdF": [86, 51], "r1": [142, 126], "r2": [58, 126]}, "why": "Builds foot speed, calf and ankle strength, coordination and fitness in a few minutes. Small, springy bounces train the body to absorb load lightly — a good sign you're ready for more impact.", "how": ["Rope length: stand on the middle; handles should reach your armpits.", "Stand tall, elbows close to your sides; turn the rope with your wrists, not your arms.", "Jump just high enough for the rope to pass — 2–3 cm — landing softly on the balls of your feet.", "Start with short rounds and rest between them. No rope? Do the same bounces without one."], "feel": "Calves and feet working; light, quiet landings.", "avoid": "Jumping high or landing heavily on your heels. Stop if it jars your back or sends pain down the leg."},
+ ladder1:{"name": "Ladder: one foot in each square", "area": "Agility", "period": 500, "props": ["ladder"], "A": {"head": [104, 13], "sh": [102, 25], "hip": [100, 60], "kn": [118, 64], "ft": [112, 86], "knF": [98, 82], "ftF": [96, 103], "el": [94, 40], "hd": [98, 54], "elF": [110, 38], "hdF": [120, 30]}, "B": {"head": [104, 13], "sh": [102, 25], "hip": [100, 60], "kn": [98, 82], "ft": [96, 103], "knF": [118, 64], "ftF": [112, 86], "el": [110, 38], "hd": [120, 30], "elF": [94, 40], "hdF": [98, 54]}, "why": "The classic ladder drill for fast feet and rhythm. Trains quick, light steps and coordination between arms and legs.", "how": ["Lay an agility ladder (or chalk/tape squares) on the floor.", "Run forward placing one foot in each square, driving the knees up.", "Stay on the balls of your feet and pump your arms.", "Walk back to the start — each length is one rep. Build speed only once the pattern is clean."], "feel": "Quick, light steps; heart rate rising.", "avoid": "Looking down the whole time or stomping. Keep it smooth before making it fast."},
+ ladder2:{"name": "Ladder: two feet in each square", "area": "Agility", "period": 420, "props": ["ladder"], "A": {"head": [103, 14], "sh": [102, 26], "hip": [100, 62], "kn": [108, 80], "ft": [106, 96], "knF": [100, 84], "ftF": [98, 103], "el": [96, 42], "hd": [100, 56], "elF": [108, 40], "hdF": [116, 48]}, "B": {"head": [103, 14], "sh": [102, 26], "hip": [100, 62], "kn": [100, 84], "ft": [98, 103], "knF": [108, 80], "ftF": [106, 96], "el": [108, 40], "hd": [116, 48], "elF": [96, 42], "hdF": [100, 56]}, "why": "Doubles the number of foot contacts, sharpening rapid footwork and ankle stiffness.", "how": ["Face the ladder.", "Step both feet into the first square (right, left), then both into the next square.", "Keep the steps short and fast, arms moving in rhythm.", "Each length of the ladder is one rep."], "feel": "Fast feet; calves working.", "avoid": "Heavy heel strikes. Slow down if you start tripping on the rungs."},
+ ladder3:{"name": "Ladder: lateral in-in-out-out", "area": "Agility", "period": 700, "props": ["ladder"], "A": {"head": [100, 16], "sh": [100, 28], "hip": [100, 62], "el": [116, 46], "hd": [114, 60], "elF": [84, 46], "hdF": [86, 60], "kn": [114, 83], "ft": [124, 103], "knF": [86, 83], "ftF": [76, 103]}, "B": {"head": [100, 13], "sh": [100, 25], "hip": [100, 59], "el": [116, 46], "hd": [114, 60], "elF": [84, 46], "hdF": [86, 60], "kn": [104, 81], "ft": [105, 99], "knF": [96, 81], "ftF": [95, 99]}, "why": "Side-to-side footwork that trains lateral agility, hip control and quick direction changes.", "how": ["Stand side-on to the ladder (drawn here from the front).", "Step in with the right foot, then the left (in-in).", "Step out with the right foot, then the left on the far side (out-out), moving one square along each time.", "Stay low in an athletic stance. Do lengths in both directions."], "feel": "Hips and legs working; quick side steps.", "avoid": "Crossing your feet or standing too upright."},
+ ballob:{"name": "Ball oblique twists", "area": "Agility", "period": 1600, "props": ["ball"], "A": {"head": [50, 66], "sh": [62, 72], "mid": [84, 67], "hip": [104, 66], "el": [58, 88], "hd": [54, 103], "kn": [122, 93], "ft": [140, 80], "knF": [124, 88], "ftF": [142, 74]}, "B": {"head": [50, 66], "sh": [62, 72], "mid": [84, 67], "hip": [104, 66], "el": [58, 88], "hd": [54, 103], "kn": [122, 93], "ft": [140, 80], "knF": [124, 88], "ftF": [142, 74]}, "why": "Rhythmic ball work that trains your trunk, pelvis and hips to coordinate through rotation, rather than just bracing stiffly. Changing the direction and speed of load helps the lower back control movement better.", "how": ["Lie face-down over a stability ball with it under your hips and belly, hands on the floor under your shoulders, knees bent and feet lifted.", "Keeping your shoulders and hands steady, swing your bent legs from side to side, letting the hips rotate over the ball.", "Find a smooth, rhythmic tempo — like a pendulum.", "Keep going for the set time, breathing steadily."], "feel": "Obliques and sides of the trunk working; hips rotating smoothly.", "avoid": "Holding your breath or collapsing onto the ball — keep light weight through your hands. Stop if it provokes back pain or leg symptoms."},
+ walk:{name:"Walk",area:"Recovery",period:1200,
+  A:{head:[100,14],sh:[100,26],hip:[100,62],kn:[110,82],ft:[106,104],knF:[92,82],ftF:[84,102],el:[94,42],hd:[92,56],elF:[106,42],hdF:[110,56]},
+  B:{head:[100,14],sh:[100,26],hip:[100,62],kn:[92,82],ft:[84,102],knF:[110,82],ftF:[106,104],el:[106,42],hd:[110,56],elF:[94,42],hdF:[92,56]},
+  why:"Walking pumps fluid through the discs, keeps the nerve moving, and is strongly linked to faster recovery.",
+  how:["Walk at a comfortable pace on flat ground.","Stand tall, let your arms swing naturally.","Split into two shorter walks if one long one is too much."],
+  feel:"Easing of stiffness. Leg symptoms should not build up.", avoid:"Pushing through worsening leg pain — shorten the walk and build gradually."}
+};
+
+/* ---------- default doses ---------- */
+const DEF = { tilt:{sets:2,reps:10}, catcow:{sets:1,reps:10}, glide:{sets:2,reps:10,sides:true},
+ k2c:{sets:1,reps:3,hold:20,sides:true}, press:{sets:2,reps:10}, child:{sets:1,reps:2,hold:20}, bridge:{sets:2,reps:10},
+ birddog:{sets:2,reps:5,hold:8,sides:true}, deadbug:{sets:2,reps:8},
+ sideplank:{sets:2,reps:3,hold:10,sides:true}, fig4:{sets:1,reps:2,hold:30,sides:true}, hipflex:{sets:1,reps:2,hold:30,sides:true},
+ hams:{sets:1,reps:2,hold:30,sides:true}, walk:{sets:1,reps:1,hold:600},
+ worlds:{sets:1,reps:5,hold:5,sides:true}, downdog:{sets:1,reps:3,hold:30}, sphinx:{sets:1,reps:2,hold:45},
+ lowlunge:{sets:1,reps:2,hold:30,sides:true}, pigeon:{sets:1,reps:1,hold:45,sides:true}, happybaby:{sets:1,reps:1,hold:45}, seatfold:{sets:1,reps:2,hold:30},
+ standfold:{sets:1,reps:2,hold:20}, tree:{sets:1,reps:1,hold:30,sides:true}, warrior2:{sets:1,reps:2,hold:30,sides:true},
+ butterfly:{sets:1,reps:2,hold:30}, legsup:{sets:1,reps:1,hold:180}, quadstand:{sets:1,reps:2,hold:30,sides:true}, couch:{sets:1,reps:2,hold:45,sides:true}, ballob:{"sets": 2, "reps": 1, "hold": 30}, skip:{"sets": 4, "reps": 1, "hold": 30}, ladder1:{"sets": 1, "reps": 4}, ladder2:{"sets": 1, "reps": 4}, ladder3:{"sets": 1, "reps": 4}, hipstep:{"sets":1,"reps":1,"hold":60,"sides":true}, crabreach:{"sets": 1, "reps": 6, "sides": true}, tyson:{sets:2,reps:6}, squathams:{"sets": 2, "reps": 8}, shcars:{"sets": 1, "reps": 5, "sides": true}, wallslide:{"sets": 2, "reps": 10}, hip9090:{"sets": 2, "reps": 8}, frog:{sets:1,reps:6,hold:5}
+};
+const CATS = {
+ 'Rehab':['tilt','glide','press','walk'],
+ 'Mobility':["shcars","wallslide","hip9090","crabreach","squathams","hipstep","tyson"],
+ 'Core & strength':['bridge','birddog','deadbug','sideplank'],
+ 'Stretch':['worlds','k2c','fig4','hipflex','hams','quadstand','couch','frog'],
+ 'Yoga':['catcow','child','downdog','sphinx','lowlunge','pigeon','happybaby','butterfly','seatfold','standfold','tree','warrior2','legsup'],
+ 'Agility':["skip", "ladder1", "ladder2", "ladder3", "ballob"]
+};
+const catOf=id=>Object.keys(CATS).find(c=>CATS[c].includes(id));
+// stretches and yoga poses: pause 2 s at the end point of each rep
+[...CATS['Stretch'], ...CATS['Yoga']].forEach(id=>{ const ex=EX[id]; if(!ex||ex.endHoldMs) return; const P=ex.period; ex.endHoldMs=2000; ex.seg=[0.12*P, 0.38*P, Math.max(2000,0.12*P), 0.38*P]; ex.period=ex.seg.reduce((a,b)=>a+b,0); });
+const ORDER=Object.values(CATS).flat();
+function catChips(sel,cur,cb){ const el=$(sel); el.innerHTML=[...Object.keys(CATS),'All'].map(c=>`<button class="chip ${c===cur?'on':''}" data-c="${c}">${c}</button>`).join('');
+  el.querySelectorAll('.chip').forEach(b=>b.onclick=()=>cb(b.dataset.c)); }
+const inCat=(id,c)=>c==='All'||catOf(id)===c;
+let libCat='All', bCat='All';
+const SAMPLE = {name:"Gentle starter", items:["tilt","catcow","glide","k2c","press","child","walk"]};
+
+/* ---------- figure renderer ---------- */
+const lerp=(a,b,t)=>[a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t];
+function interp(A,B,t){ const o={}; const keys=new Set([...Object.keys(A),...Object.keys(B)]);
+  keys.forEach(k=>{ const base=/F$/.test(k)?k.slice(0,-1):null; const a=A[k]||(base&&A[base])||B[k], b=B[k]||(base&&B[base])||A[k]; o[k]=lerp(a,b,t); }); return o; }
+const pt=p=>p[0].toFixed(1)+' '+p[1].toFixed(1);
+const TARGETS = { // which muscles light up + front direction of torso (1/-1) tilt:{t:['abs','back'],f:-1,label:'Deep core · lumbar spine'},
+ tyson:{t:['arm','back'],f:1,label:'Shoulders · chest · hips (sit-back)'},
+ tilt:{t:['abs','back'],f:-1,label:'Deep abdominals · low back'},
+ k2c:{t:['back','glutes'],f:-1,label:'Lower back · glutes'}, glide:{t:['nerve'],f:-1,label:'Sciatic nerve'},
+ catcow:{t:['back','abs'],f:1,label:'Whole spine'}, child:{t:['back'],f:1,label:'Back extensors · lats'},
+ press:{t:['back'],f:1,label:'Lumbar spine (extension)'}, bridge:{t:['glutes','hams'],f:-1,label:'Glutes · hamstrings'},
+ birddog:{t:['back','glutes'],f:1,label:'Back extensors · glutes'}, deadbug:{t:['abs'],f:-1,label:'Deep abdominals'}, sideplank:{t:['obliques'],f:-1,label:'Obliques · quadratus lumborum'},
+ fig4:{t:['glutes','nerve'],f:-1,label:'Piriformis · deep hip · sciatic nerve'}, hipflex:{t:['quads'],f:1,label:'Hip flexors (front of hip)'},
+ worlds:{t:['back','glutes'],f:-1,label:'Hip flexors · hamstrings · upper back'},
+ downdog:{t:['hams','back'],f:1,label:'Hamstrings · calves · spine · shoulders'},
+ sphinx:{t:['back'],f:1,label:'Lumbar spine (gentle extension)'},
+ lowlunge:{t:['farleg'],f:-1,label:'Hip flexors · quads (back leg)'},
+ pigeon:{t:['glutes'],f:-1,label:'Glutes · piriformis · deep hip'},
+ happybaby:{t:['glutes','back'],f:-1,label:'Hips · inner thighs · lower back'},
+ seatfold:{t:['hams'],f:-1,label:'Hamstrings · back'},
+ standfold:{t:['hams','back'],f:-1,label:'Hamstrings · back'},
+ tree:{t:['abs'],f:-1,label:'Balance · ankle · core'},
+ warrior2:{t:['quads','glutes'],f:-1,label:'Legs · glutes · hips'},
+ butterfly:{t:['quads'],f:-1,label:'Inner thighs · hips'},
+ legsup:{t:['abs'],f:-1,label:'Relaxation · unloads the spine'},
+ couch:{t:['farleg'],f:-1,label:'Hip flexors · quads (back leg)'},
+ frog:{t:['quads','farleg','hams'],f:-1,label:'Inner thighs (adductors) · hips · hamstrings'},
+ quadstand:{t:['quads'],f:-1,label:'Quads · hip flexor'},
+ shcars:{t:["arm"],f:-1,label:"Shoulder joint (full rotation)"},
+ wallslide:{t:["arm", "back"],f:-1,label:"Shoulders \u00b7 upper back \u00b7 posture"},
+ hip9090:{t:["glutes"],f:-1,label:"Hip rotation (internal & external)"},
+ crabreach:{t:["glutes", "back", "arm"],f:-1,label:"Hips \u00b7 upper back \u00b7 shoulders (rotation)"}, 
+ squathams:{t:["hams"],f:-1,label:"Hamstrings \u00b7 hips \u00b7 ankles"},
+ hipstep:{t:['glutes'],f:-1,label:'Hip rotation & flexion (takes load off the lower back)'},
+ skip:{t:["quads", "farleg"],f:-1,label:"Calves \u00b7 ankles \u00b7 coordination \u00b7 fitness"},
+ ladder1:{t:["quads"],f:-1,label:"Foot speed \u00b7 hip flexors \u00b7 coordination"},
+ ladder2:{t:["quads"],f:-1,label:"Foot speed \u00b7 calves \u00b7 ankles"},
+ ladder3:{t:["quads", "farleg"],f:-1,label:"Lateral agility \u00b7 hips \u00b7 coordination"},
+ ballob:{t:["obliques"],f:1,label:"Obliques \u00b7 trunk\u2013hip coordination"},
+ hams:{t:['hams','nerve'],f:-1,label:'Hamstrings · sciatic nerve'}, walk:{t:[],f:-1,label:'Whole body'}
+};
+const FIG_DEFS = `<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<radialGradient id="gM" cx=".35" cy=".28" r=".95"><stop offset="0" stop-color="#ffffff"/><stop offset=".45" stop-color="#dfe1e6"/><stop offset="1" stop-color="#8e939c"/></radialGradient>
+<radialGradient id="gF" cx=".35" cy=".28" r=".95"><stop offset="0" stop-color="#d4d6db"/><stop offset=".5" stop-color="#a9adb4"/><stop offset="1" stop-color="#6c7078"/></radialGradient>
+<radialGradient id="gH" cx=".35" cy=".28" r=".95"><stop offset="0" stop-color="#ffc8a4"/><stop offset=".45" stop-color="#ee6a37"/><stop offset="1" stop-color="#a3361a"/></radialGradient>
+<filter id="glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="1.8" result="b"/><feColorMatrix in="b" type="matrix" values="1 0 0 0 0.3  0 .55 0 0 0.05  0 0 .25 0 0  0 0 0 .9 0" result="c"/><feMerge><feMergeNode in="c"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<radialGradient id="gSh"><stop offset="0" stop-color="#000" stop-opacity=".55"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+<linearGradient id="gFloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3f3a2f"/><stop offset="1" stop-color="#3f3a2f" stop-opacity="0"/></linearGradient>
+<marker id="arw" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 Z" fill="#8fd0ff"/></marker>
+<radialGradient id="gT" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#c9ccd3"/></radialGradient>
+</defs></svg>`;
+document.body.insertAdjacentHTML('afterbegin', FIG_DEFS);
+
+const nrm=(a,b)=>{const dx=b[0]-a[0],dy=b[1]-a[1],L=Math.hypot(dx,dy)||1;return [-dy/L,dx/L];};
+const off=(p,n,d)=>[p[0]+n[0]*d,p[1]+n[1]*d];
+function ctrlThrough(p0,pm,p2){return [2*pm[0]-(p0[0]+p2[0])/2, 2*pm[1]-(p0[1]+p2[1])/2];}
+// tapered muscle segment with a belly, fibres and a highlight
+let BIG=false;
+const hotAttr=fill=>(BIG&&fill==='url(#gH)')?' filter="url(#glow)"':'';
+function muscle(a,b,wa,wm,wb,fill,detail=true,bias=0){
+  const n=nrm(a,b), m=lerp(a,b,.42);
+  const wS=s=>wm/2*(1+bias*s*.45);
+  const side=s=>{const p0=off(a,n,wa/2*s),p2=off(b,n,wb/2*s),pm=off(m,n,wS(s)*s);return [p0,ctrlThrough(p0,pm,p2),p2];};
+  const L=side(1),R=side(-1);
+  let s=`<path d="M${pt(L[0])} Q${pt(L[1])} ${pt(L[2])} A${(wb/2).toFixed(1)} ${(wb/2).toFixed(1)} 0 0 0 ${pt(R[2])} Q${pt(R[1])} ${pt(R[0])} A${(wa/2).toFixed(1)} ${(wa/2).toFixed(1)} 0 0 0 ${pt(L[0])}Z" fill="${fill}"${hotAttr(fill)}/>`;
+  if(detail){
+    [-.55,-.2,.15,.5].forEach(k=>{const p0=off(a,n,wa/2*k*.85),p2=off(b,n,wb/2*k*.85),pm=off(m,n,wS(Math.sign(k)||1)*k*.85);
+      s+=`<path d="M${pt(p0)} Q${pt(ctrlThrough(p0,pm,p2))} ${pt(p2)}" stroke="rgba(70,76,92,.2)" stroke-width=".5" fill="none"/>`;});
+    // separation groove between muscle heads
+    const g0=off(a,n,0),g2=off(b,n,0),gm=off(m,n,wS(-bias||1)*-bias*.15);
+    s+=`<path d="M${pt(lerp(g0,g2,.15))} Q${pt(ctrlThrough(g0,gm,g2))} ${pt(lerp(g0,g2,.8))}" stroke="rgba(70,76,92,.3)" stroke-width=".7" fill="none"/>`;
+    const h0=off(a,n,wa/2*.62),h2=off(b,n,wb/2*.62),hm=off(m,n,wS(1)*.64);
+    s+=`<path d="M${pt(lerp(h0,h2,.1))} Q${pt(ctrlThrough(h0,hm,h2))} ${pt(lerp(h0,h2,.82))}" stroke="rgba(255,255,255,.75)" stroke-width="1.2" stroke-linecap="round" fill="none"/>`;
+  }
+  return s;
+}
+const tendon=(p,r)=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="${r}" fill="url(#gT)"/>`;
+function torso(pose,f,tg,fill){
+  const a=pose.sh,b=pose.hip,c=pose.mid?ctrlThrough(a,pose.mid,b):lerp(a,b,.5);
+  const Q=t=>[(1-t)*(1-t)*a[0]+2*(1-t)*t*c[0]+t*t*b[0],(1-t)*(1-t)*a[1]+2*(1-t)*t*c[1]+t*t*b[1]];
+  const D=t=>[2*(1-t)*(c[0]-a[0])+2*t*(b[0]-c[0]),2*(1-t)*(c[1]-a[1])+2*t*(b[1]-c[1])];
+  const N=t=>{const d=D(t),L=Math.hypot(d[0],d[1])||1;return [-d[1]/L,d[0]/L];};
+  const W=t=>{const k=[[0,13],[.3,16],[.65,12],[1,15]];for(let i=1;i<k.length;i++)if(t<=k[i][0]){const u=(t-k[i-1][0])/(k[i][0]-k[i-1][0]);return k[i-1][1]+u*(k[i][1]-k[i-1][1]);}return 15;};
+  const ts=[...Array(13)].map((_,i)=>i/12);
+  const band=(t0,t1,o0,o1,fillc,extra='')=>{const tt=ts.map(t=>t0+(t1-t0)*t);
+    const A=tt.map(t=>off(Q(t),N(t),W(t)/2*o0)), B=tt.map(t=>off(Q(t),N(t),W(t)/2*o1)).reverse();
+    return `<path d="M${A.concat(B).map(pt).join(' L')}Z" fill="${fillc}"${hotAttr(fillc)} ${extra}/>`;};
+  let s=band(0,1,-1,1,tg.includes('obliques')?'url(#gH)':fill);
+  // fibres along torso
+  [-.6,-.2,.2,.6].forEach(o=>{s+=`<path d="M${ts.map(t=>pt(off(Q(t),N(t),W(t)/2*o))).join(' L')}" stroke="rgba(70,76,92,.18)" stroke-width=".55" fill="none"/>`;});
+  // erector spinae (back side) and rectus abdominis (front side)
+  s+=band(.12,.97,-f*.25,-f*.85,tg.includes('back')?'url(#gH)':'rgba(120,126,138,.16)');
+  s+=band(.48,.97,f*.2,f*.8,tg.includes('abs')?'url(#gH)':'rgba(255,255,255,.4)');
+  [.6,.72,.84].forEach(t=>{s+=`<path d="M${pt(off(Q(t),N(t),W(t)/2*f*.2))} L${pt(off(Q(t),N(t),W(t)/2*f*.8))}" stroke="rgba(110,116,128,.45)" stroke-width=".8"/>`;});
+  // pec / rib-cage line
+  s+=`<path d="M${pt(off(Q(.12),N(.12),W(.12)/2*f*.9))} Q${pt(off(Q(.3),N(.3),W(.3)/2*f*1.05))} ${pt(off(Q(.42),N(.42),W(.42)/2*f*.3))}" stroke="rgba(70,76,92,.3)" stroke-width=".8" fill="none"/>`;
+  // glute
+  const g=off(Q(.94),N(.94),W(.94)/2*-f*.55), d=D(.94), ang=Math.atan2(d[1],d[0])*180/Math.PI;
+  s+=`<ellipse cx="${g[0].toFixed(1)}" cy="${g[1].toFixed(1)}" rx="8.5" ry="6.2" transform="rotate(${ang.toFixed(0)} ${g[0].toFixed(1)} ${g[1].toFixed(1)})" fill="${tg.includes('glutes')?'url(#gH)':fill}"${tg.includes('glutes')?hotAttr('url(#gH)'):''} stroke="rgba(70,76,92,.2)" stroke-width=".5"/>`;
+  return {s, front:N(.05).map(v=>v*f)};
+}
+function head(pose,F){
+  const h=pose.head;
+  const dx=h[0]-pose.sh[0],dy=h[1]-pose.sh[1],L=Math.hypot(dx,dy)||1, up=[dx/L,dy/L];
+  const P=(f,u)=>[h[0]+F[0]*f+up[0]*u,h[1]+F[1]*f+up[1]*u];
+  let s=`<circle cx="${h[0].toFixed(1)}" cy="${h[1].toFixed(1)}" r="8" fill="url(#gT)"/>`;
+  const face=P(2.2,-1.2); s+=`<circle cx="${face[0].toFixed(1)}" cy="${face[1].toFixed(1)}" r="6.3" fill="url(#gM)"/>`;
+  const jaw=P(3.2,-5); s+=`<circle cx="${jaw[0].toFixed(1)}" cy="${jaw[1].toFixed(1)}" r="3.4" fill="url(#gM)"/>`;
+  // cheek / temporalis lines
+  const t0=P(-1.5,4),t1=P(3,1.5),t2=P(4.5,-4); s+=`<path d="M${pt(t0)} Q${pt(t1)} ${pt(t2)}" stroke="rgba(70,76,92,.28)" stroke-width=".6" fill="none"/>`;
+  const ear=P(-.6,-.6); s+=`<ellipse cx="${ear[0].toFixed(1)}" cy="${ear[1].toFixed(1)}" rx="1.5" ry="2.3" fill="#d3d6dc" transform="rotate(${(Math.atan2(up[1],up[0])*180/Math.PI+90).toFixed(0)} ${ear[0].toFixed(1)} ${ear[1].toFixed(1)})"/>`;
+  const eye=P(5.6,.6); s+=`<circle cx="${eye[0].toFixed(1)}" cy="${eye[1].toFixed(1)}" r=".9" fill="#80858f"/>`;
+  return s;
+}
+const dot=(a,b)=>a[0]*b[0]+a[1]*b[1], sub=(a,b)=>[a[0]-b[0],a[1]-b[1]];
+function leg(hip,kn,ft,fill,hot,F){
+  const n1=nrm(hip,kn), n2=nrm(kn,ft);
+  const fold=dot(n1,sub(ft,kn)), back1 = Math.abs(fold)>3 ? Math.sign(fold) : -Math.sign(dot(n1,F))||1; // hamstring side of thigh
+  const cs=dot(n2,sub(hip,kn)), back2 = Math.abs(cs)>3 ? Math.sign(cs) : -Math.sign(dot(n2,F))||1;     // calf side of shin
+  return muscle(hip,kn,12,14.5,8.5,hot||fill,true,-back1*.7)
+       + muscle(kn,ft,8,10.5,4.2,fill,true,back2*.9)
+       + tendon(kn,4.2)+tendon(ft,3);
+}
+function arm(sh,el,hd,fill){
+  const n=nrm(sh,el), bend=dot(n,sub(hd,el)), bs=Math.abs(bend)>2?Math.sign(bend):0;
+  return muscle(sh,el,8.5,9.8,6,fill,true,bs*.6)
+       + muscle(sh,lerp(sh,el,.42),10.5,11,6.5,fill,false)
+       + muscle(el,hd,6,7.4,3.8,fill,true,-bs*.3)
+       + tendon(el,3)+`<circle cx="${hd[0].toFixed(1)}" cy="${hd[1].toFixed(1)}" r="3.2" fill="${fill}"${hotAttr(fill)}/>`;
+}
+const MOVERS=['hd','ft','kn','el','head','hip','hdF','ftF','knF','elF'];
+function moverOf(ex){ if(ex._mv!==undefined) return ex._mv; let best=null,bd=10;
+  MOVERS.forEach(k=>{ const base=k.replace('F',''); const a=ex.A[k]||ex.A[base], b=ex.B[k]||ex.B[base]; if(!a||!b) return; const d=Math.hypot(a[0]-b[0],a[1]-b[1]); if(d>bd){bd=d;best=[a,b,k];} });
+  return ex._mv=best; }
+function ghost(pose){ const far={kn:pose.knF||pose.kn,ft:pose.ftF||pose.ft,el:pose.elF||pose.el,hd:pose.hdF||pose.hd};
+  const seg=pts=>`<path d="M${pts.map(pt).join(' L')}" />`;
+  return `<g stroke="rgba(255,255,255,.16)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none">${seg([pose.hip,far.kn,far.ft])}${seg([pose.sh,far.el,far.hd])}${seg(pose.mid?[pose.sh,pose.mid,pose.hip]:[pose.sh,pose.hip])}${seg([pose.hip,pose.kn,pose.ft])}${seg([pose.sh,pose.el,pose.hd])}</g><circle cx="${pose.head[0].toFixed(1)}" cy="${pose.head[1].toFixed(1)}" r="7.5" fill="rgba(255,255,255,.14)"/>`; }
+function arrowFor(ex,pose){ const mv=moverOf(ex); if(!mv) return ''; const [a,b]=mv; const m=lerp(a,b,.5), d=Math.hypot(b[0]-a[0],b[1]-a[1]);
+  let n=nrm(a,b); if(dot(n,sub(m,pose.hip))<0) n=n.map(v=>-v);
+  const c=off(m,n,d*.28), A=lerp(a,c,.12), B=lerp(b,c,.12);
+  return `<path d="M${pt(A)} Q${pt(c)} ${pt(B)}" stroke="#8fd0ff" stroke-width="1.4" stroke-dasharray="3 2.5" fill="none" opacity=".85" marker-start="url(#arw)" marker-end="url(#arw)"/>`; }
+function shadow(pose){ const xs=Object.values(pose).filter(v=>v[1]>88).map(v=>v[0]); if(!xs.length) return '';
+  const x0=Math.min(...xs), x1=Math.max(...xs); return `<ellipse cx="${((x0+x1)/2).toFixed(1)}" cy="106" rx="${((x1-x0)/2+12).toFixed(1)}" ry="3.2" fill="url(#gSh)"/>`; }
+function figMarkup(pose, id, big=false, other=null){
+  BIG=big; const ex=EX[id], props=ex.props||[], T=TARGETS[id]||{t:[],f:-1}, tg=T.t;
+  const far = {kn:pose.knF||pose.kn, ft:pose.ftF||pose.ft, el:pose.elF||pose.el, hd:pose.hdF||pose.hd};
+  let s = '<rect x="-80" y="105" width="360" height="14" fill="url(#gFloor)" opacity=".55"/><rect x="-80" y="104.6" width="360" height=".8" fill="rgba(255,255,255,.18)"/>' + shadow(pose);
+  if(big && other) s += ghost(other) + arrowFor(ex,pose);
+  if(props.includes('wall')) s += '<rect x="99" y="-40" width="7" height="145" fill="#5a5a5a"/>';
+  if(props.includes('couch')) s += '<g fill="#4d4d4d"><rect x="18" y="72" width="56" height="33" rx="4"/><rect x="14" y="40" width="14" height="65" rx="5"/></g><rect x="20" y="68" width="52" height="6" rx="3" fill="#5c5c5c"/>';
+  if(props.includes('wallback')) s += '<rect x="83" y="-40" width="7" height="145" fill="#5a5a5a"/>';
+  if(props.includes('wallfront')) s += '<rect x="140" y="-10" width="7" height="115" fill="#5a5a5a"/>';
+  if(props.includes('door')) s += '<rect x="83" y="-30" width="5" height="135" fill="#6a5a48"/>';
+  if(props.includes('roller')) s += '<circle cx="63" cy="98" r="7" fill="#3f6d8a"/><circle cx="63" cy="98" r="2.5" fill="#2b4b60"/>';
+  if(props.includes('rollerup')) s += '<rect x="66" y="80" width="12" height="25" rx="2" fill="#6a6a6a"/><ellipse cx="72" cy="80" rx="6" ry="2.2" fill="#c9e04a"/>';
+  if(props.includes('ladder')){ for(let x=-50;x<=250;x+=24) s+=`<rect x="${x}" y="102.5" width="3" height="3" rx="1" fill="#e7c94a"/>`; s+='<rect x="-60" y="104.5" width="330" height="1.2" fill="#e7c94a" opacity=".7"/>'; }
+  if(props.includes('ball')) s += '<circle cx="100" cy="86" r="19" fill="#7d8790"/><circle cx="94" cy="80" r="9" fill="#9aa4ad" opacity=".55"/>';
+  if(props.includes('chair')) s += '<g stroke="#5d5d5d" stroke-width="4" stroke-linecap="round" fill="none"><path d="M70 76 H106"/><path d="M72 76 V105 M104 76 V105"/><path d="M70 76 V36"/></g>';
+  const legHot = tg.some(x=>['hams','quads'].includes(x)) ? 'url(#gH)' : null;
+  const Fv=(()=>{const n=nrm(pose.sh,pose.hip);return n.map(v=>v*T.f);})();
+  s += leg(pose.hip,far.kn,far.ft,'url(#gF)',tg.includes('farleg')?'url(#gH)':null,Fv) + arm(pose.sh,far.el,far.hd,'url(#gF)');
+  const neckEnd=lerp(pose.sh,pose.head,.7);
+  s += muscle(pose.sh,neckEnd,7,6.5,6,'url(#gM)',false);
+  { const ne=lerp(pose.sh,pose.head,.78), nf=Fv; const a=[ne[0]-nf[0]*2.5,ne[1]-nf[1]*2.5], b=[pose.sh[0]+nf[0]*3.5,pose.sh[1]+nf[1]*3.5]; s+=`<path d="M${pt(a)} L${pt(b)}" stroke="#cfd2d8" stroke-width="2.6" stroke-linecap="round" opacity=".85"/>`; }
+  const t=torso(pose,T.f,tg,'url(#gM)'); s+=t.s;
+  s += head(pose,t.front);
+  s += leg(pose.hip,pose.kn,pose.ft,'url(#gM)',legHot,Fv);
+  if(tg.includes('nerve')){
+    const nd=`M${pt(pose.hip)} L${pt(lerp(pose.hip,pose.kn,.98))} L${pt(lerp(pose.kn,pose.ft,.85))}`;
+    s+=`<path d="${nd}" stroke="rgba(255,214,70,.35)" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="${nd}" stroke="#f2b705" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
+  }
+  s += arm(pose.sh,pose.el,pose.hd,tg.includes('arm')?'url(#gH)':'url(#gM)');
+  if(props.includes('stick')) s += `<circle cx="${pose.hd[0].toFixed(1)}" cy="${pose.hd[1].toFixed(1)}" r="4.5" fill="none" stroke="#c9a36b" stroke-width="2.5"/>`;
+  if(props.includes('dowel')){ const nb=nrm(pose.sh,pose.hip).map(v=>v*-T.f*9); const a=[pose.head[0]+nb[0]*.5,pose.head[1]+nb[1]*.5], b=[pose.hip[0]+nb[0],pose.hip[1]+nb[1]]; const e1=lerp(b,a,1.18), e0=lerp(a,b,1.12); s += `<path d="M${pt(e1)} L${pt(e0)}" stroke="#c9a36b" stroke-width="2.6" stroke-linecap="round"/>`; }
+  if(props.includes('rope')&&pose.r1) s += `<path d="M${pt(pose.hd)} C${pt(pose.r1)} ${pt(pose.r2)} ${pt(pose.hdF||pose.hd)}" stroke="#9bd2ff" stroke-width="1.6" fill="none"/>`;
+  if(props.includes('strap')) s += `<path d="M${pt(pose.hd)} L${pt(pose.ft)}" stroke="#7fd1bd" stroke-width="2" stroke-dasharray="4 3"/>`;
+  return s;
+}
+
+function viewBoxFor(id){ const e=EX[id]; if(e.vb) return e.vb;
+  let minY=1e9,minX=1e9,maxX=-1e9; [e.A,e.B].forEach(p=>Object.entries(p).forEach(([k,v])=>{ const r=k==='head'?9:4; minY=Math.min(minY,v[1]-r); minX=Math.min(minX,v[0]-r); maxX=Math.max(maxX,v[0]+r); }));
+  if(e.props&&e.props.includes('chair')){ minY=Math.min(minY,34); minX=Math.min(minX,68); }
+  if(e.props&&e.props.includes('wallfront')) maxX=Math.max(maxX,150);
+  if(e.props&&(e.props.includes('wallback')||e.props.includes('door'))) minX=Math.min(minX,80);
+  if(e.props&&e.props.includes('ball')){ minX=Math.min(minX,80); maxX=Math.max(maxX,120); }
+  if(e.props&&e.props.includes('couch')){ minY=Math.min(minY,38); minX=Math.min(minX,12); }
+  const top=Math.max(-30,Math.min(minY-8, 112-62)); const w=Math.max(150, maxX-minX+24); const cx=(minX+maxX)/2;
+  return e.vb=`${(cx-w/2).toFixed(0)} ${top.toFixed(0)} ${w.toFixed(0)} ${(112-top).toFixed(0)}`; }
+function figSVG(id, cls=''){ return `<svg class="fig ${cls}" viewBox="${viewBoxFor(id)}" data-ex="${id}" role="img" aria-label="${EX[id].name} illustration">${figMarkup(EX[id].A, id)}</svg>`; }
+const ease=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+function poseAt(ex,ts,t){ const p=interp(ex.A,ex.B,t);
+  if(ex.armCircle){ const u=(ts%ex.period)/ex.period, th=2*Math.PI*u, s=ex.A.sh, dx=Math.sin(th), dy=Math.cos(th);
+    p.el=[s[0]+18*dx, s[1]+18*dy]; p.hd=[s[0]+36*dx, s[1]+36*dy]; p.elF=[s[0]-1,s[1]+18]; p.hdF=[s[0]-1,s[1]+36]; }
+  return p; }
+function phaseT(ex,ts){
+  if(ex.seg){ let m=ts%ex.period; const [a,b,c,d]=ex.seg; if(m<a) return 0; m-=a; if(m<b) return ease(m/b); m-=b; if(m<c) return 1; m-=c; return 1-ease(Math.min(1,m/d)); }
+  const p=(ts%ex.period)/ex.period;
+  if(ex.period<2000) return (1-Math.cos(2*Math.PI*p))/2;           // fast rhythmic moves: continuous
+  if(p<.12) return 0; if(p<.5) return ease((p-.12)/.38);            // hold start, move
+  if(p<.62) return 1; return 1-ease((p-.62)/.38); }                 // hold end, return
+let lastThumb=0, F3state=null;
+function figModel(){ try{ return localStorage.getItem('br_model2')||'2d'; }catch(e){ return '2d'; } }
+function loadF3(){ F3state='loading';
+  import('./fig3.js').then(()=>F3.load(figModel()==='titan'?'./titan/':'./')).then(()=>{ F3state='ready'; }).catch(e=>{ F3state='failed'; console.warn('Realistic figure unavailable:',e); }); }
+function animate(ts){
+  try{
+    if(window.F3 && F3.ready){ R3.release(); F3.frame(ts); }
+    else if(F3state==='failed'){ R3.frame(ts); }
+    else if(!F3state && figModel()!=='2d' && document.querySelector('.player.on .stage, details[open] .stage')) loadF3();
+  }catch(e){ console.warn(e); }
+  const doThumbs = ts-lastThumb>33; if(doThumbs) lastThumb=ts;
+  const vh=window.innerHeight;
+  document.querySelectorAll('.view.on svg.fig[data-ex], .player.on svg.fig[data-ex], details[open] svg.fig[data-ex], .builder.on svg.fig[data-ex]').forEach(svg=>{
+    if(svg.dataset.r3) return;
+    const big=svg.classList.contains('big'); if(!big && !doThumbs) return;
+    const r=svg.getBoundingClientRect(); if(r.bottom<0||r.top>vh||r.width===0) return;
+    const ex=EX[svg.dataset.ex], t=phaseT(ex,ts);
+    svg.innerHTML=figMarkup(poseAt(ex,ts,t), svg.dataset.ex, big, ex.armCircle?null:(big?(t<.5?ex.B:ex.A):null));
+  });
+  requestAnimationFrame(animate);
+}
+requestAnimationFrame(animate);
+setTimeout(()=>{ if(!F3state && figModel()!=='2d') loadF3(); }, 1200);
+function paintFigBtns(){ document.querySelectorAll('[data-fig]').forEach(b=>b.classList.toggle('ghost', b.dataset.fig!==figModel())); }
+document.querySelectorAll('[data-fig]').forEach(b=>b.addEventListener('click',()=>{ if(b.dataset.fig===figModel()) return; try{ localStorage.setItem('br_model2', b.dataset.fig); }catch(e){} location.reload(); }));
+paintFigBtns();
+
+/* ---------- 3D figure renderer (WebGL ray-marched sculpted anatomical figure) ---------- */
+const R3 = (() => {
+  const MAXB = 96, MAXP = 24, MAXX = 10, NG = 6, SC = 0.1;
+  const FRAG = `
+precision highp float;
+uniform vec2 uRes; uniform vec3 uCam; uniform vec3 uFw; uniform vec3 uRt; uniform vec3 uUp; uniform float uFoc;
+uniform vec4 uA[${MAXB}]; uniform vec4 uB[${MAXB}]; uniform int uNb;
+uniform vec4 uG[${NG}]; uniform int uGe[${NG}];
+uniform vec4 uPA[${MAXP}]; uniform vec4 uPB[${MAXP}]; uniform int uNp;
+uniform vec4 uXc[${MAXX}]; uniform vec3 uXh[${MAXX}]; uniform int uNx;
+uniform vec4 uBound; uniform vec3 uLight;
+float sdRC(vec3 p, vec3 a, vec3 b, float r1, float r2){
+  vec3 ba=b-a; float l2=dot(ba,ba);
+  if(l2<1e-6) return length(p-a)-r1;
+  float rr=r1-r2; float a2=l2-rr*rr;
+  if(a2<1e-6) return length(p-a)-max(r1,r2);
+  float il2=1.0/l2; vec3 pa=p-a; float y=dot(pa,ba); float z=y-l2;
+  vec3 xv=pa*l2-ba*y; float x2=dot(xv,xv); float y2=y*y*l2; float z2=z*z*l2;
+  float k=sign(rr)*rr*rr*x2;
+  if(sign(z)*a2*z2>k) return sqrt(x2+z2)*il2-r2;
+  if(sign(y)*a2*y2<k) return sqrt(x2+y2)*il2-r1;
+  return (sqrt(x2*a2*il2)+y*rr)*il2-r1;
+}
+float smin(float a,float b,float k){ float h=max(k-abs(a-b),0.0)/k; return min(a,b)-h*h*k*0.25; }
+float sdBox(vec3 p, vec3 b){ vec3 q=abs(p)-b; return length(max(q,0.0))+min(max(q.x,max(q.y,q.z)),0.0); }
+vec2 map(vec3 p){
+  float d=1e5; float m=0.0;
+  float bd=length(p-uBound.xyz)-uBound.w;
+  if(bd<0.15){
+    for(int g=0; g<${NG}; g++){
+      int s0 = g==0 ? 0 : uGe[g-1]; int e0 = uGe[g];
+      if(e0<=s0) continue;
+      float gb=length(p-uG[g].xyz)-uG[g].w;
+      if(gb > d+0.25) continue;
+      for(int i=0;i<${MAXB};i++){ if(i>=e0) break; if(i<s0) continue;
+        float w=uA[i].w; float mm=floor(w/10.0); float r1=w-mm*10.0;
+        float di=sdRC(p,uA[i].xyz,uB[i].xyz,r1,uB[i].w);
+        if(di<d) m=mm;
+        d=smin(d,di,0.11);
+      }
+    }
+  } else { d=bd; m=-2.0; }
+  for(int i=0;i<${MAXP};i++){ if(i>=uNp) break;
+    float w=uPA[i].w; float mm=floor(w/10.0); float r1=w-mm*10.0;
+    float di=sdRC(p,uPA[i].xyz,uPB[i].xyz,r1,uPB[i].w);
+    if(di<d){ d=di; m=mm; }
+  }
+  for(int i=0;i<${MAXX};i++){ if(i>=uNx) break;
+    float di=sdBox(p-uXc[i].xyz,uXh[i])-0.06;
+    if(di<d){ d=di; m=uXc[i].w; }
+  }
+  if(p.y<d){ d=p.y; m=-1.0; }
+  return vec2(d,m);
+}
+vec3 calcN(vec3 p){ const vec2 e=vec2(0.003,-0.003);
+  return normalize(e.xyy*map(p+e.xyy).x+e.yyx*map(p+e.yyx).x+e.yxy*map(p+e.yxy).x+e.xxx*map(p+e.xxx).x); }
+float shadow(vec3 ro, vec3 rd){
+  float res=1.0; float t=0.12; float ph=1e10;
+  for(int i=0;i<36;i++){ vec2 hm=map(ro+rd*t); float h=hm.x;
+    if(hm.y<-1.5){ t+=max(h,0.03); ph=1e10; if(t>20.0) break; continue; }
+    float y=h*h/(2.0*ph); float d=sqrt(max(h*h-y*y,0.0)); res=min(res,6.0*d/max(0.001,t-y)); ph=h;
+    t+=clamp(h,0.01,0.35); if(res<0.005||t>20.0) break; }
+  res=clamp(res,0.0,1.0); return res*res*(3.0-2.0*res);
+}
+float ao(vec3 p, vec3 n){ float o=0.0, s=1.0;
+  for(int i=1;i<=4;i++){ float h=0.1*float(i); vec2 q=map(p+n*h); if(q.y>-1.5) o+=(h-q.x)*s; s*=0.65; }
+  return clamp(1.0-2.0*o,0.0,1.0); }
+vec3 matCol(float m){
+  if(m<-0.5) return vec3(0.20,0.18,0.14);
+  if(m<0.5) return vec3(0.70,0.705,0.72);      // muscle (clay)
+  if(m<1.5) return vec3(0.92,0.27,0.07);       // target muscle
+  if(m<2.5) return vec3(1.0,0.78,0.08);        // nerve
+  if(m<3.5) return vec3(0.42,0.42,0.43);       // prop grey
+  if(m<4.5) return vec3(0.22,0.22,0.23);       // prop dark
+  if(m<5.5) return vec3(0.55,0.6,0.66);        // ball
+  if(m<6.5) return vec3(0.95,0.78,0.2);        // ladder yellow
+  if(m<7.5) return vec3(0.45,0.75,1.0);        // rope blue
+  if(m<8.5) return vec3(0.72,0.55,0.33);       // wood
+  if(m<9.5) return vec3(0.4,0.8,0.68);         // strap green
+  if(m<10.5) return vec3(0.25,0.45,0.58);      // roller
+  return vec3(0.74,0.745,0.76);                 // smooth (bone/skin)
+}
+vec3 bg(vec2 uv){ float v=1.0-0.35*dot(uv*vec2(0.7,0.9),uv*vec2(0.7,0.9));
+  return mix(vec3(0.10,0.09,0.065),vec3(0.30,0.27,0.21),clamp(0.45+uv.y*0.6,0.0,1.0))*v; }
+void main(){
+  vec2 uv=(2.0*gl_FragCoord.xy-uRes)/uRes.y;
+  vec3 rd=normalize(uv.x*uRt+uv.y*uUp+uFoc*uFw);
+  vec3 ro=uCam;
+  float tf = rd.y<-1e-4 ? -ro.y/rd.y : 1e9;
+  float tmax=min(tf,90.0);
+  float t=0.1; vec2 h=vec2(1.0,-1.0); bool hit=false;
+  for(int i=0;i<100;i++){ h=map(ro+rd*t); if(h.x<0.0012*(1.0+t*0.04)){ hit=true; break; } t+=h.x; if(t>tmax) break; }
+  if(!hit && tf<1e8){ hit=true; t=tf; h=vec2(0.0,-1.0); }
+  vec3 col=bg(uv);
+  if(hit){
+    vec3 p=ro+rd*t; float m=h.y;
+    vec3 n = m<-0.5 ? vec3(0.0,1.0,0.0) : calcN(p);
+    vec3 base=matCol(m);
+    vec3 L=normalize(uLight);
+    float sh= m<-0.5 && length(p.xz-uBound.xz)>uBound.w*2.5+6.0 ? 1.0 : shadow(p+n*0.03,L);
+    float occ= m<-0.5 && length(p.xz-uBound.xz)>uBound.w*1.6 ? 1.0 : ao(p,n);
+    float dif=clamp((dot(n,L)+0.08)/1.08,0.0,1.0)*mix(0.2,1.0,sh);
+    float sky=0.55+0.45*n.y;
+    vec3 hv=normalize(L-rd); float spe=pow(clamp(dot(n,hv),0.0,1.0),36.0)*sh*(m<-0.5?0.04:0.45);
+    float rim=pow(1.0-clamp(dot(n,-rd),0.0,1.0),3.0);
+    float bounce=clamp(-n.y*0.5+0.5,0.0,1.0)*0.12;
+    vec3 c=base*(1.25*dif*vec3(1.0,0.95,0.88)+(0.2*sky*vec3(0.72,0.78,0.9)+bounce*vec3(0.9,0.8,0.6))*occ*occ)+spe+rim*0.3*occ*vec3(1.0,0.93,0.8);
+    if(m>0.5&&m<2.5) c+=base*0.18;
+    if(m<-0.5){ c=base*(0.35+0.65*mix(0.2,1.0,sh))*occ*1.3; float fade=smoothstep(12.0,42.0,length(p.xz-uBound.xz)); c=mix(c,col,fade); }
+    col=c;
+  }
+  col=(col*(2.51*col+0.03))/(col*(2.43*col+0.59)+0.14);
+  col=pow(clamp(col,0.0,1.0),vec3(0.4545));
+  gl_FragColor=vec4(col,1.0);
+}`;
+  const VERT = `attribute vec2 p; void main(){ gl_Position=vec4(p,0.0,1.0); }`;
+
+  let slow=0, canvas=null, gl=null, prog=null, U={}, ok=null, cur=null, quality=0.7, lastT=0, frameMs=16;
+  const view={ yaw:0.5, pitch:0.2, touched:false };
+
+  function init(){
+    if(ok!==null) return ok;
+    try{
+      canvas=document.createElement('canvas'); canvas.className='fig3d';
+      gl=canvas.getContext('webgl',{antialias:false,alpha:false,preserveDrawingBuffer:false,powerPreference:'high-performance'});
+      if(!gl) throw new Error('no webgl');
+      const sh=(type,src)=>{ const s=gl.createShader(type); gl.shaderSource(s,src); gl.compileShader(s); if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s)); return s; };
+      prog=gl.createProgram(); gl.attachShader(prog,sh(gl.VERTEX_SHADER,VERT)); gl.attachShader(prog,sh(gl.FRAGMENT_SHADER,FRAG)); gl.linkProgram(prog);
+      if(!gl.getProgramParameter(prog,gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(prog));
+      gl.useProgram(prog);
+      const buf=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,buf); gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+      const loc=gl.getAttribLocation(prog,'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+      ['uRes','uCam','uFw','uRt','uUp','uFoc','uA','uB','uNb','uG','uGe','uPA','uPB','uNp','uXc','uXh','uNx','uBound','uLight'].forEach(n=>U[n]=gl.getUniformLocation(prog,n));
+      bindDrag();
+      ok=true;
+    }catch(e){ console.warn('3D disabled:',e&&e.message); ok=false; }
+    return ok;
+  }
+
+  /* ---- vector helpers ---- */
+  const A=(a,b)=>[a[0]+b[0],a[1]+b[1],a[2]+b[2]], S=(a,b)=>[a[0]-b[0],a[1]-b[1],a[2]-b[2]], K=(a,k)=>[a[0]*k,a[1]*k,a[2]*k];
+  const D=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2], Ln=a=>Math.hypot(a[0],a[1],a[2]), N=a=>{const l=Ln(a)||1;return [a[0]/l,a[1]/l,a[2]/l];};
+  const Lr=(a,b,t)=>[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];
+  const X=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+  const perp=(v,axis)=>{ const ax=N(axis); return S(v,K(ax,D(v,ax))); };
+  const PA=(...v)=>v.reduce((s,x)=>A(s,x),[0,0,0]);
+
+  /* ---- build anatomical primitives from a 2D pose ---- */
+  const MUS=0, HOT=1, NERVE=2, SMOOTH=11;
+  function build(pose,id){
+    const ex=EX[id], T=TARGETS[id]||{t:[],f:-1}, tg=T.t, props=ex.props||[], front=ex.view==='front';
+    const to3=(p,z)=>[p[0],105-p[1],z];
+    const B=[], P=[], Xb=[];
+    let G=0; const body=(a,r1,b,r2,m)=>B.push([a,r1,b,r2,m,G]);
+    const ball=(c,r,m)=>body(c,r,c,r,m);
+    const prop=(a,r1,b,r2,m)=>P.push([a,r1,b,r2,m]);
+    const box=(c,h,m)=>Xb.push([c,h,m]);
+    const n2=nrm(pose.sh,pose.hip); const F=front?[0,0,1]:N([n2[0]*T.f,-n2[1]*T.f,0]);
+    const Lv=front?[1,0,0]:[0,0,1];
+    const sw=9.0, hw=5.0;
+    const sh3=to3(pose.sh,0), hip3=to3(pose.hip,0), head3=to3(pose.head,0), mid3=pose.mid?to3(pose.mid,0):Lr(sh3,hip3,.5);
+    const far={kn:pose.knF||pose.kn,ft:pose.ftF||pose.ft,el:pose.elF||pose.el,hd:pose.hdF||pose.hd};
+    const zl=(s,w)=>front?0:s*w;
+    const spine=N(S(hip3,sh3));
+    const ob=tg.includes('obliques')?HOT:MUS, BK=tg.includes('back')?HOT:MUS, AB=tg.includes('abs')?HOT:SMOOTH, GL=tg.includes('glutes')?HOT:MUS;
+    const TQ=(t,f,l)=>PA(Lr(sh3,hip3,t),K(F,f),K(Lv,l));   // point on trunk: t along spine, f forward, l lateral
+
+    /* group 0: trunk */
+    G=0;
+    [1,-1].forEach(s=>{
+      const a=A(sh3,K(Lv,s*(sw-3.2))), m=A(mid3,K(Lv,s*4.6)), h=A(hip3,K(Lv,s*(hw-0.4)));
+      body(a,6.2,m,5.2,ob); body(m,5.2,h,5.8,ob);
+      body(A(A(sh3,K(Lv,s*(sw-2.2))),K(F,-1.8)),4.9,A(A(mid3,K(Lv,s*5.0)),K(F,-0.9)),3.3,BK);          // lats
+      body(A(Lr(sh3,head3,.3),K(Lv,s*1.4)),2.7,A(A(sh3,K(Lv,s*(sw-1.2))),K(F,-0.6)),3.1,MUS);          // traps
+      const pc=TQ(.3,2.5,s*4.0); body(pc,5.1,A(TQ(.26,2.9,s*1.6),[0,0,0]),4.6,MUS);                       // pecs
+      body(A(sh3,PA(K(F,3.0),K(spine,-0.6),K(Lv,s*0.6))),1.0,A(A(sh3,K(Lv,s*(sw-1.4))),PA(K(F,1.6),K(spine,-0.8))),0.95,SMOOTH); // collarbones
+      [.5,.63,.76].forEach(t=>body(TQ(t-0.045,4.3,s*1.7),1.65,TQ(t+0.045,4.2,s*1.7),1.65,AB));            // six-pack
+      body(TQ(.12,-4.6,s*2.4),2.9,TQ(.95,-4.2,s*2.4),2.8,BK);                                             // erectors
+      const g=PA(hip3,K(F,-3.6),K(Lv,s*3.4)); body(g,5.6,A(g,K(spine,2.0)),5.0,GL);                       // glutes
+    });
+    body(sh3,6.4,mid3,5.5,ob); body(mid3,5.5,hip3,6.0,ob);
+    /* group 1: neck + head */
+    G=1;
+    const up=N(S(head3,sh3));
+    body(sh3,3.6,Lr(sh3,head3,.6),3.2,MUS);
+    [1,-1].forEach(s=>body(PA(head3,K(F,-1.2),K(up,-3.8),K(Lv,s*2.6)),1.15,PA(sh3,K(F,2.8),K(Lv,s*0.7)),1.0,MUS)); // SCM
+    body(A(head3,K(F,0.5)),6.3,PA(head3,K(F,-1.0),K(up,1.4)),6.4,SMOOTH);
+    body(PA(head3,K(F,2.6),K(up,-3.4)),3.3,PA(head3,K(F,1.2),K(up,-1.0)),3.1,SMOOTH);
+    body(PA(head3,K(F,6.2),K(up,0.3)),1.15,PA(head3,K(F,6.0),K(up,-1.4)),1.05,SMOOTH);       // nose
+    body(PA(head3,K(F,5.2),K(up,2.1),K(Lv,2.3)),1.0,PA(head3,K(F,5.2),K(up,2.1),K(Lv,-2.3)),1.0,SMOOTH); // brow
+    [1,-1].forEach(s=>body(PA(head3,K(F,-0.6),K(up,-0.6),K(Lv,s*6.0)),0.9,PA(head3,K(F,-0.4),K(up,1.0),K(Lv,s*6.0)),1.1,SMOOTH)); // ears
+
+    const shN=A(sh3,K(Lv,sw)), shF=A(sh3,K(Lv,-sw)), hpN=A(hip3,K(Lv,hw)), hpF=A(hip3,K(Lv,-hw));
+    /* arms */
+    const arm=(sP,e2,h2,s,m)=>{
+      const e=to3(e2,zl(s,sw-0.6)), h=to3(h2,zl(s,sw-0.8));
+      const ua=N(S(e,sP)), fa=N(S(h,e));
+      let bd=perp(S(h,e),ua); bd=Ln(bd)>1.2?N(bd):N(perp(F,ua)); if(Ln(perp(F,ua))<0.2&&Ln(bd)<0.5) bd=N(perp(spine,ua));
+      const lat=N(perp(K(Lv,s),ua));
+      const dc=A(sP,K(ua,1.4));
+      ball(PA(dc,K(bd,1.5)),3.2,m); ball(PA(dc,K(lat,1.5)),3.5,m); ball(PA(dc,K(bd,-1.5)),3.2,m);   // deltoid heads
+      body(dc,3.6,PA(Lr(sP,e,.48),K(lat,1.0)),2.0,m);                                                   // deltoid insertion
+      body(sP,3.0,e,2.3,m);                                                                              // humerus core
+      body(PA(Lr(sP,e,.32),K(bd,1.4)),2.5,PA(Lr(sP,e,.8),K(bd,1.0)),1.9,m);                            // biceps
+      body(PA(Lr(sP,e,.15),K(bd,-1.5)),2.9,PA(Lr(sP,e,.72),K(bd,-1.2)),2.1,m);                         // triceps
+      ball(A(e,K(bd,-1.7)),1.3,SMOOTH);                                                                  // elbow point
+      let lf=N(perp(lat,fa)), bf=N(perp(bd,fa));
+      body(e,2.4,h,1.35,m);                                                                              // forearm core
+      body(PA(Lr(e,h,.06),K(bf,0.9),K(lf,1.0)),2.6,PA(Lr(e,h,.55),K(lf,0.6)),1.6,m);                    // brachioradialis
+      body(PA(Lr(e,h,.1),K(lf,-1.0),K(bf,0.2)),2.3,PA(Lr(e,h,.62),K(lf,-0.5)),1.5,m);                   // flexors
+      // hand
+      let wv=perp(Lv,fa); wv=Ln(wv)>0.3?N(wv):N(perp(spine,fa));
+      let tv=perp(F,fa); tv=Ln(tv)>0.3?N(tv):N(X(fa,wv));
+      const pn=N(X(fa,wv));
+      const k=A(h,K(fa,4.0));
+      body(A(h,K(fa,0.6)),1.5,k,1.3,SMOOTH); body(PA(h,K(fa,0.8),K(wv,1.1)),1.15,PA(k,K(wv,1.3)),1.0,SMOOTH); body(PA(h,K(fa,0.8),K(wv,-1.1)),1.15,PA(k,K(wv,-1.3)),1.0,SMOOTH);
+      [-1.5,-0.5,0.5,1.5].forEach((o,i)=>{ const len=[2.9,3.6,3.4,2.8][i]; body(A(k,K(wv,o*0.95)),0.62,PA(k,K(fa,len),K(wv,o*1.05),K(pn,-0.7)),0.48,SMOOTH); });
+      body(PA(h,K(fa,1.2),K(tv,1.3)),0.75,PA(h,K(fa,3.2),K(tv,2.6)),0.55,SMOOTH);                      // thumb
+    };
+    /* legs */
+    const legHotQ=tg.includes('quads')?HOT:MUS, legHotH=tg.includes('hams')?HOT:MUS;
+    const leg=(hP,k2,f2,s,mQ,mH,nerve)=>{
+      const k=to3(k2,zl(s,hw+0.3)), f=to3(f2,zl(s,hw+0.3));
+      const ta=N(S(k,hP));
+      let bk=perp(S(f,k),ta); bk=Ln(bk)>2?N(bk):N(perp(K(F,-1),ta));
+      const lat=N(perp(K(Lv,s),ta));
+      const mC=(mQ===HOT||mH===HOT)?HOT:MUS;
+      body(hP,6.0,k,3.7,mC);                                                                             // femur core
+      body(PA(Lr(hP,k,.14),K(bk,-1.9)),3.9,PA(Lr(hP,k,.8),K(bk,-1.5)),2.7,mQ);                          // rectus femoris
+      body(PA(Lr(hP,k,.28),K(lat,2.3),K(bk,-0.5)),4.1,PA(Lr(hP,k,.86),K(lat,1.8),K(bk,-0.8)),2.9,mQ);  // vastus lateralis
+      body(PA(Lr(hP,k,.64),K(lat,-1.9),K(bk,-1.0)),2.9,PA(Lr(hP,k,.9),K(lat,-1.4),K(bk,-1.3)),2.5,mQ); // vastus medialis
+      body(PA(Lr(hP,k,.18),K(bk,2.1)),4.1,PA(Lr(hP,k,.8),K(bk,1.6)),2.7,mH);                           // hamstrings
+      body(PA(Lr(hP,k,.05),K(lat,-2.6)),4.0,PA(Lr(hP,k,.55),K(lat,-1.7)),2.3,mQ);                       // adductors
+      ball(A(k,K(bk,-2.7)),1.8,SMOOTH);                                                                  // kneecap
+      const sa=N(S(f,k));
+      let cs=perp(S(hP,k),sa); cs=Ln(cs)>2?N(cs):N(perp(K(F,-1),sa));
+      const sl=N(perp(K(Lv,s),sa));
+      body(k,3.2,f,1.9,MUS);                                                                             // tibia core
+      body(PA(Lr(k,f,.08),K(cs,1.7),K(sl,-1.0)),2.9,PA(Lr(k,f,.5),K(cs,0.8),K(sl,-0.6)),1.9,MUS);      // gastroc medial
+      body(PA(Lr(k,f,.08),K(cs,1.6),K(sl,1.0)),2.7,PA(Lr(k,f,.44),K(cs,0.8),K(sl,0.6)),1.8,MUS);       // gastroc lateral
+      const toe=N(A(K(cs,-0.9),K(sa,0.3)));
+      ball(PA(f,K(toe,-1.0),K(sa,0.8)),2.0,SMOOTH);                                                      // heel
+      body(A(f,K(toe,0.6)),2.1,A(f,K(toe,5.6)),1.6,SMOOTH);                                             // foot
+      body(A(f,K(toe,5.6)),1.5,A(f,K(toe,7.9)),1.05,SMOOTH);                                            // toes
+      if(nerve){ prop(A(hP,K(bk,6.9)),0.95,A(k,K(bk,4.6)),0.9,NERVE); prop(A(k,K(cs,4.5)),0.9,A(Lr(k,f,.85),K(cs,2.9)),0.8,NERVE); }
+    };
+    G=2; arm(shN,pose.el,pose.hd,1,tg.includes('arm')?HOT:MUS);
+    G=3; arm(shF,far.el,far.hd,-1,MUS);
+    G=4; leg(hpN,pose.kn,pose.ft,1,legHotQ,legHotH,tg.includes('nerve'));
+    G=5; const fl=tg.includes('farleg')?HOT:MUS; leg(hpF,far.kn,far.ft,-1,fl,fl,false);
+    // props
+    const hd3=to3(pose.hd,zl(1,sw-0.8)), hdF3=to3(far.hd,zl(-1,sw-0.8)), ft3=to3(pose.ft,zl(1,hw+0.3));
+    if(props.includes('chair')){ box([88,29,0],[17,1.4,14],4); [72,104].forEach(x=>[-12,12].forEach(z=>box([x,14.5,z],[1.1,14.5,1.1],4))); box([70.5,49,0],[1.3,19,14],4); }
+    if(props.includes('wall')) box([103,70,0],[3.5,70,26],3);
+    if(props.includes('wallback')) box([86,70,0],[3,70,55],3);
+    if(props.includes('wallfront')) box([144,60,0],[3,60,55],3);
+    if(props.includes('door')) { box([85.5,68,-14],[2.2,68,2.2],8); }
+    if(props.includes('couch')){ box([46,16,0],[27,16,22],4); box([21,33,0],[7,32,22],4); }
+    if(props.includes('roller')) prop([63,7,-16],7,[63,7,16],7,10);
+    if(props.includes('rollerup')) prop([72,0.5,10],6,[72,25,10],6,4);
+    if(props.includes('ball')) prop([100,19,0],19,[100,19,0],19,5);
+    if(props.includes('ladder')){ prop([-60,0.7,-13],0.7,[260,0.7,-13],0.7,6); prop([-60,0.7,13],0.7,[260,0.7,13],0.7,6); for(let x=-46;x<=250&&P.length<MAXP-2;x+=24) prop([x,0.6,-13],0.55,[x,0.6,13],0.55,6); }
+    if(props.includes('strap')) prop(hd3,0.5,ft3,0.5,9);
+    if(props.includes('stick')) prop(A(hd3,[0,0,-6]),1.1,A(hdF3,[0,0,6]),1.1,8);
+    if(props.includes('dowel')){ const a=A(head3,K(F,-7.5)), b=A(hip3,K(F,-8.5)); prop(Lr(b,a,1.18),1.1,Lr(a,b,1.12),1.1,8); }
+    if(props.includes('rope')&&pose.r1){
+      const p0=hd3, p3=hdF3, c1=[pose.hd[0],105-pose.r1[1],18], c2=[far.hd[0],105-pose.r2[1],-18];
+      const bez=t=>{const u=1-t; const q=A(A(K(p0,u*u*u),K(c1,3*u*u*t)),A(K(c2,3*u*t*t),K(p3,t*t*t))); q[1]=Math.max(q[1],0.7); return q;};
+      for(let i=0;i<8;i++) prop(bez(i/8),0.5,bez((i+1)/8),0.5,7);
+    }
+    return {B,P,Xb};
+  }
+
+  /* ---- framing (per exercise, from both end poses) ---- */
+  const frameCache={};
+  function framing(id){
+    if(frameCache[id]) return frameCache[id];
+    let mn=[1e9,1e9,1e9], mx=[-1e9,-1e9,-1e9];
+    [EX[id].A,EX[id].B].forEach(p=>{ build(p,id).B.forEach(([a,r1,b,r2])=>[[a,r1],[b,r2]].forEach(([q,r])=>{ for(let i=0;i<3;i++){ mn[i]=Math.min(mn[i],q[i]-r); mx[i]=Math.max(mx[i],q[i]+r);} })); });
+    mn[1]=Math.min(mn[1],0);
+    const c=[(mn[0]+mx[0])/2,(mn[1]+mx[1])/2,(mn[2]+mx[2])/2];
+    const half=[(mx[0]-mn[0])/2,(mx[1]-mn[1])/2];
+    return frameCache[id]={c,half};
+  }
+
+  /* ---- drag to rotate ---- */
+  function bindDrag(){
+    let st=null, lastTap=0;
+    canvas.style.touchAction='none';
+    canvas.addEventListener('pointerdown',e=>{ st={x:e.clientX,y:e.clientY,yaw:view.yaw,pitch:view.pitch}; try{canvas.setPointerCapture(e.pointerId);}catch(_){}
+      const now=Date.now(); if(now-lastTap<300){ view.yaw=(cur&&EX[cur.id].yaw)??0.5; view.pitch=0.2; } lastTap=now; hideHint(); });
+    canvas.addEventListener('pointermove',e=>{ if(!st) return; view.yaw=st.yaw-(e.clientX-st.x)*0.012; view.pitch=Math.max(-0.05,Math.min(1.1,st.pitch+(e.clientY-st.y)*0.008)); });
+    const end=()=>{ st=null; }; canvas.addEventListener('pointerup',end); canvas.addEventListener('pointercancel',end);
+  }
+  let hint=null;
+  function hideHint(){ view.touched=true; if(hint){ hint.style.opacity='0'; } }
+
+  /* ---- mount into the active stage ---- */
+  function pickStage(){
+    const pl=document.querySelector('.player.on .stage'); if(pl) return pl;
+    const vh=window.innerHeight; const list=[...document.querySelectorAll('.view.on details[open] .stage')].filter(s=>{const r=s.getBoundingClientRect(); return r.bottom>0&&r.top<vh;});
+    return list[list.length-1]||null;
+  }
+  function mount(stage){
+    if(cur&&cur.stage===stage&&stage.contains(canvas)) return cur;
+    if(cur){ cur.svg.style.display=''; delete cur.svg.dataset.r3; if(canvas.parentNode) canvas.parentNode.removeChild(canvas); if(hint&&hint.parentNode) hint.parentNode.removeChild(hint); cur=null; }
+    if(!stage) return null;
+    const svg=stage.querySelector('svg.fig'); if(!svg) return null;
+    svg.style.display='none'; svg.dataset.r3='1';
+    stage.style.position='relative'; stage.appendChild(canvas);
+    if(!hint){ hint=document.createElement('div'); hint.className='hint3d'; hint.textContent='↻ Drag to rotate · double-tap to reset'; }
+    hint.style.opacity=view.touched?'0':'1'; stage.appendChild(hint);
+    view.yaw=EX[svg.dataset.ex].yaw??0.5; view.pitch=0.2;
+    cur={stage,svg,id:svg.dataset.ex};
+    return cur;
+  }
+
+  function render(id,pose){
+    const w=canvas.clientWidth, h=canvas.clientHeight; if(!w||!h) return;
+    const dpr=Math.min(window.devicePixelRatio||1,2);
+    const W=Math.max(120,Math.round(w*dpr*quality)), H=Math.max(90,Math.round(h*dpr*quality));
+    if(canvas.width!==W||canvas.height!==H){ canvas.width=W; canvas.height=H; }
+    gl.viewport(0,0,W,H);
+    const {B:B0,P,Xb}=build(pose,id);
+    const B=B0.slice(0,MAXB).sort((a,b)=>a[5]-b[5]);
+    const fa=new Float32Array(MAXB*4), fb=new Float32Array(MAXB*4);
+    const gmn=[...Array(NG)].map(()=>[1e9,1e9,1e9]), gmx=[...Array(NG)].map(()=>[-1e9,-1e9,-1e9]), ge=new Int32Array(NG);
+    let mn=[1e9,1e9,1e9], mx=[-1e9,-1e9,-1e9];
+    B.forEach(([a,r1,b,r2,m,g],i)=>{
+      fa.set([a[0]*SC,a[1]*SC,a[2]*SC,m*10+r1*SC],i*4); fb.set([b[0]*SC,b[1]*SC,b[2]*SC,r2*SC],i*4);
+      [[a,r1],[b,r2]].forEach(([q,r])=>{for(let j=0;j<3;j++){ mn[j]=Math.min(mn[j],q[j]-r); mx[j]=Math.max(mx[j],q[j]+r); gmn[g][j]=Math.min(gmn[g][j],q[j]-r); gmx[g][j]=Math.max(gmx[g][j],q[j]+r);}});
+    });
+    for(let g=0,i=0;g<NG;g++){ while(i<B.length&&B[i][5]===g) i++; ge[g]=i; }
+    const gu=new Float32Array(NG*4);
+    for(let g=0;g<NG;g++){ if(gmn[g][0]>1e8){ gu.set([0,0,0,0],g*4); continue; }
+      const c=[(gmn[g][0]+gmx[g][0])/2,(gmn[g][1]+gmx[g][1])/2,(gmn[g][2]+gmx[g][2])/2], r=Math.hypot(gmx[g][0]-gmn[g][0],gmx[g][1]-gmn[g][1],gmx[g][2]-gmn[g][2])/2+1;
+      gu.set([c[0]*SC,c[1]*SC,c[2]*SC,r*SC],g*4); }
+    const pa=new Float32Array(MAXP*4), pb=new Float32Array(MAXP*4);
+    P.slice(0,MAXP).forEach(([a,r1,b,r2,m],i)=>{ pa.set([a[0]*SC,a[1]*SC,a[2]*SC,m*10+r1*SC],i*4); pb.set([b[0]*SC,b[1]*SC,b[2]*SC,r2*SC],i*4); });
+    const xc=new Float32Array(MAXX*4), xh=new Float32Array(MAXX*3);
+    Xb.slice(0,MAXX).forEach(([c,hh,m],i)=>{ xc.set([c[0]*SC,c[1]*SC,c[2]*SC,m],i*4); xh.set(hh.map(v=>v*SC),i*3); });
+    const bc=[(mn[0]+mx[0])/2,(mn[1]+mx[1])/2,(mn[2]+mx[2])/2], br=Math.hypot(mx[0]-mn[0],mx[1]-mn[1],mx[2]-mn[2])/2+2;
+    // camera
+    const fr=framing(id), fov=0.55, aspect=W/H;
+    const need=Math.max(fr.half[1]+12,(fr.half[0]+10)/aspect)/Math.tan(fov/2)*1.1;
+    const tgt=fr.c, cp=Math.cos(view.pitch);
+    const cam=[tgt[0]+Math.sin(view.yaw)*cp*need, tgt[1]+Math.sin(view.pitch)*need, tgt[2]+Math.cos(view.yaw)*cp*need];
+    const fw=N(S(tgt,cam)), rt=N(X(fw,[0,1,0])), upv=X(rt,fw);
+    gl.uniform2f(U.uRes,W,H); gl.uniform3fv(U.uCam,cam.map(v=>v*SC)); gl.uniform3fv(U.uFw,fw); gl.uniform3fv(U.uRt,rt); gl.uniform3fv(U.uUp,upv); gl.uniform1f(U.uFoc,1/Math.tan(fov/2));
+    gl.uniform4fv(U.uA,fa); gl.uniform4fv(U.uB,fb); gl.uniform1i(U.uNb,B.length);
+    gl.uniform4fv(U.uG,gu); gl.uniform1iv(U.uGe,ge);
+    gl.uniform4fv(U.uPA,pa); gl.uniform4fv(U.uPB,pb); gl.uniform1i(U.uNp,Math.min(P.length,MAXP));
+    gl.uniform4fv(U.uXc,xc); gl.uniform3fv(U.uXh,xh); gl.uniform1i(U.uNx,Math.min(Xb.length,MAXX));
+    gl.uniform4f(U.uBound,bc[0]*SC,bc[1]*SC,bc[2]*SC,br*SC);
+    const ly=1.0, lyaw=view.yaw-1.1; gl.uniform3f(U.uLight,Math.sin(lyaw)*0.6,ly,Math.cos(lyaw)*0.6);
+    gl.drawArrays(gl.TRIANGLES,0,3);
+  }
+
+  function frame(ts){
+    if(ok===false) return;
+    const stage=pickStage();
+    if(!stage){ if(cur) mount(null); return; }
+    if(!init()) return;
+    const c=mount(stage); if(!c) return;
+    if(lastT){ frameMs=frameMs*0.9+(ts-lastT)*0.1; if(frameMs>40&&quality>0.38) quality-=0.03; else if(frameMs<20&&quality<0.85) quality+=0.01; }
+    if(quality<=0.4&&frameMs>75){ slow=(slow||0)+1; if(slow>120){ ok=false; mount(null); return; } } else slow=0;
+    lastT=ts;
+    const ex=EX[c.id], t=phaseT(ex,ts);
+    render(c.id, interp(ex.A,ex.B,t));
+  }
+  return { frame, release:()=>{ if(cur) mount(null); }, get ok(){ return ok; }, build, renderStill:(id,pose)=>{ if(!init()) return false; render(id,pose); return true; }, canvasEl:()=>canvas, view, setQ:q=>{quality=q;} };
+})();
+
+['frog','ladder3'].forEach(k=>{ if(EX[k]) EX[k].view='front'; });
+if(EX.ballob){ EX.ballob.legs3d='hipswing'; EX.ballob.period=2400; } if(EX.legsup){ EX.legsup.yaw=-0.6; EX.legsup.kneesToHead=true; } if(EX.sideplank){ EX.sideplank.view3d='sidelying'; Object.assign(EX.sideplank,{feetIn:0.9,kneeOut:-3.2,arms3d:'sideplank'}); } if(EX.worlds){ EX.worlds.lookHand=true; } if(EX.tilt){ EX.tilt.plantFeet=true; } if(EX.shcars){ EX.shcars.armCircle=true; EX.shcars.period=6000; } if(EX.tyson){ EX.tyson.plantFeet=true; EX.tyson.hipArc=16; } if(EX.crabreach){ EX.crabreach.handsOut=true; EX.crabreach.reachAcross=16; } if(EX.fig4){ EX.fig4.pose3d='fig4'; } if(EX.downdog){ EX.downdog.kneesDown=true; } if(EX.pigeon){ EX.pigeon.legs3d='pigeon'; } if(EX.butterfly){ Object.assign(EX.butterfly,{kneeOut:11,kneeDrop:6,feetIn:1.2}); } if(EX.happybaby){ Object.assign(EX.happybaby,{kneeOut:7,handsToFeet:true}); } if(EX.wallslide){ EX.wallslide.arms3d='wallslide'; EX.wallslide.yaw=1.0; } if(EX.hip9090){ EX.hip9090.legs3d='9090'; EX.hip9090.yaw=1.2; } if(EX.hipstep){ EX.hipstep.legs3d='hydrant'; }
+
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+const todayKey=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
+const fmtTime=s=>{s=Math.max(0,Math.ceil(s));return s>=60?Math.floor(s/60)+':'+String(s%60).padStart(2,'0'):String(s);};
+function doseText(d){
+  if(d.hold && d.reps===1){ let t=(d.sets>1?d.sets+' × ':'')+(d.hold>=120?Math.round(d.hold/60)+' min':d.hold+' s'); if(d.sides) t+=' · each side'; return t; }
+  let t = d.sets>1 ? d.sets+' × ' : '';
+  t += d.reps + (d.hold ? ' × '+d.hold+' s hold' : ' reps');
+  if(d.sides) t += ' · each side';
+  return t;
+}
+
+/* ---------- workouts ---------- */
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+let workouts = store.get('workouts', []);
+workouts.forEach(w=>w.items=w.items.filter(([id])=>EX[id])); store.set('workouts',workouts);
+const saveWorkouts=()=>store.set('workouts',workouts);
+function estMins(items){ let s=0; items.forEach(([id,d])=>{ const u=d.sets*(d.sides?2:1); s+= u*(d.hold? d.reps*(d.hold+4) : d.reps*3.5) + 20; }); return Math.max(1,Math.round(s/60)); }
+let delArmed=null;
+function renderToday(){
+  $('#dateLine').textContent = new Date().toLocaleDateString(undefined,{weekday:'long',day:'numeric',month:'long'});
+  const log=store.get('log',{})[todayKey()];
+  if(!workouts.length){
+    $('#wkList').innerHTML = `<div class="card" style="text-align:center"><h3>No workouts yet</h3><p class="sub">Tap <b>New workout</b> to build your own, or start from a gentle sample you can edit.</p><button class="btn ghost" id="addSample">Add a sample workout</button></div>`;
+    $('#addSample').onclick=()=>{ workouts.push({id:uid(),name:SAMPLE.name,items:SAMPLE.items.map(id=>[id,{...DEF[id]}])}); saveWorkouts(); renderToday(); };
+    return;
+  }
+  $('#wkList').innerHTML = workouts.map(w=>`<div class="wk" data-w="${w.id}">
+    <div class="row" style="align-items:flex-start"><div style="flex:1"><h3 style="font-size:18px">${esc(w.name)}</h3>
+      <div class="sub">${w.items.length} exercise${w.items.length===1?'':'s'} · ~${estMins(w.items)} min${log&&log.done&&log.wid===w.id?' · <b style="color:var(--accent)">✓ done today</b>':''}</div></div></div>
+    <div class="strip">${w.items.slice(0,5).map(([id])=>`<div class="thumb">${figSVG(id)}</div>`).join('')}${w.items.length>5?`<div class="sub" style="align-self:center">+${w.items.length-5}</div>`:''}</div>
+    <div class="acts"><button class="btn" data-a="go" ${w.items.length?'':'disabled style="opacity:.5"'}>▶ Start</button><button class="btn ghost" data-a="edit">Edit</button>
+      <button class="btn ghost small" data-a="dup" title="Duplicate">⧉</button><button class="btn ghost small" data-a="del" title="Delete">${delArmed===w.id?'Delete?':'🗑'}</button></div></div>`).join('');
+  document.querySelectorAll('#wkList .wk').forEach(card=>{
+    const w=workouts.find(x=>x.id===card.dataset.w);
+    card.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{
+      const a=b.dataset.a;
+      if(a==='go'&&w.items.length) openPlayer(w,0,false);
+      if(a==='edit') openBuilder(w);
+      if(a==='dup'){ workouts.splice(workouts.indexOf(w)+1,0,{id:uid(),name:w.name+' (copy)',items:JSON.parse(JSON.stringify(w.items))}); saveWorkouts(); renderToday(); }
+      if(a==='del'){ if(delArmed===w.id){ workouts=workouts.filter(x=>x!==w); saveWorkouts(); delArmed=null; } else delArmed=w.id; renderToday(); }
+    });
+  });
+}
+$('#newWk').onclick=()=>openBuilder(null);
+
+/* ---------- builder ---------- */
+let bw=null, openEd=-1;
+function openBuilder(w){
+  bw = w ? {id:w.id,name:w.name,items:JSON.parse(JSON.stringify(w.items))} : {id:null,name:'',items:[]};
+  openEd=-1; $('#bName').value=bw.name; $('#builder').classList.add('on'); document.body.style.overflow='hidden';
+  renderBLib(); renderBList();
+  if(!w) setTimeout(()=>$('#bName').focus(),50);
+}
+function closeBuilder(){ $('#builder').classList.remove('on'); document.body.style.overflow=''; bw=null; renderAll(); }
+$('#bCancel').onclick=closeBuilder;
+$('#bSave').onclick=()=>{
+  bw.name=$('#bName').value.trim()||('Workout '+(workouts.length+1));
+  if(bw.id){ const i=workouts.findIndex(x=>x.id===bw.id); workouts[i]={...bw}; } else workouts.push({...bw,id:uid()});
+  saveWorkouts(); closeBuilder();
+};
+function stepper(label,key,val,i){ return `<div class="stepper"><button data-s="${key}" data-d="-1" data-i="${i}">−</button><div style="text-align:center"><span>${label}</span><br><b>${key==='hold'?(val? (val>=60?fmtTime(val)+' min':val+' s'):'off'):val}</b></div><button data-s="${key}" data-d="1" data-i="${i}">＋</button></div>`; }
+function renderBList(){
+  $('#bCount').textContent = bw.items.length ? `· ${bw.items.length} · ~${estMins(bw.items)} min` : '';
+  $('#bList').innerHTML = bw.items.length ? bw.items.map(([id,d],i)=>`<div class="brow" data-i="${i}" style="flex-wrap:wrap">
+     <div class="handle" data-from="list" data-i="${i}" aria-label="Drag to reorder">⠿</div>
+     <div class="thumb">${figSVG(id)}</div>
+     <div class="info"><h3>${i+1}. ${EX[id].name}</h3><button class="dosebtn" data-ed="${i}">${doseText(d)} ✎</button></div>
+     <button class="iconbtn rm" data-rm="${i}" aria-label="Remove">×</button>
+     ${openEd===i?`<div class="editor">${stepper('Sets','sets',d.sets,i)}${stepper('Reps','reps',d.reps,i)}${stepper('Hold','hold',d.hold||0,i)}
+       <div class="toggle">Each side<button class="${d.sides?'on':''}" data-side="${i}">${d.sides?'Yes':'No'}</button></div></div>`:''}
+   </div>`).join('') : `<div class="emptyDrop" id="emptyDrop">Drag exercises here from the list below,<br>or tap ＋ to add them.</div>`;
+  $('#bList').querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>{ bw.items.splice(+b.dataset.rm,1); openEd=-1; renderBList(); });
+  $('#bList').querySelectorAll('[data-ed]').forEach(b=>b.onclick=()=>{ openEd = openEd===+b.dataset.ed ? -1 : +b.dataset.ed; renderBList(); });
+  $('#bList').querySelectorAll('[data-side]').forEach(b=>b.onclick=()=>{ const d=bw.items[+b.dataset.side][1]; d.sides=!d.sides; renderBList(); });
+  $('#bList').querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{ const d=bw.items[+b.dataset.i][1], k=b.dataset.s, dir=+b.dataset.d;
+    if(k==='hold'){ const v=d.hold||0; const step = v+(dir>0?0:-1) >= 60 ? 30 : 5; d.hold=Math.max(0,Math.min(3600,v+dir*step)); if(!d.hold) delete d.hold; }
+    else d[k]=Math.max(1,Math.min(k==='sets'?10:100,(d[k]||1)+dir));
+    renderBList(); });
+  bindHandles($('#bList'));
+}
+function renderBLib(){
+  catChips('#bChips',bCat,c=>{bCat=c;renderBLib();});
+  $('#bLib').innerHTML = ORDER.filter(id=>inCat(id,bCat)).map(id=>`<div class="brow"><div class="handle" data-from="lib" data-id="${id}" aria-label="Drag into workout">⠿</div>
+    <div class="thumb">${figSVG(id)}</div><div class="info"><h3>${EX[id].name}</h3><div class="dose">${TARGETS[id].label}</div></div>
+    <button class="iconbtn" data-add="${id}" aria-label="Add">＋</button></div>`).join('');
+  $('#bLib').querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>{ bw.items.push([b.dataset.add,{...DEF[b.dataset.add]}]); renderBList(); const t=$('#bTop'); t.scrollTop=t.scrollHeight; });
+  bindHandles($('#bLib'));
+}
+/* pointer-based drag & drop (works with touch and mouse) */
+let drag=null;
+function bindHandles(root){ root.querySelectorAll('.handle').forEach(h=>h.onpointerdown=startDrag); }
+function startDrag(e){
+  e.preventDefault(); const h=e.currentTarget, row=h.closest('.brow'), r=row.getBoundingClientRect();
+  const ghost=row.cloneNode(true); ghost.classList.add("dragGhost"); ghost.style.width=r.width+'px'; ghost.style.left=r.left+'px'; ghost.style.top=r.top+'px';
+  document.body.appendChild(ghost);
+  drag={from:h.dataset.from, id:h.dataset.id, idx:+h.dataset.i, ghost, dx:e.clientX-r.left, dy:e.clientY-r.top, row, ph:null, pid:e.pointerId};
+  if(drag.from==='list'){ row.style.display='none'; }
+  try{h.setPointerCapture(e.pointerId);}catch(_){}
+  h.onpointermove=moveDrag; h.onpointerup=h.onpointercancel=endDrag;
+  moveDrag(e);
+}
+function moveDrag(e){
+  if(!drag) return;
+  drag.ghost.style.left=(e.clientX-drag.dx)+'px'; drag.ghost.style.top=(e.clientY-drag.dy)+'px';
+  const top=$('#bTop'), tr=top.getBoundingClientRect(), list=$('#bList');
+  const inside = e.clientY>=tr.top && e.clientY<=tr.bottom+ (drag.from==='lib'?20:0);
+  if(inside){
+    if(!drag.ph){ drag.ph=document.createElement('div'); drag.ph.className='placeholder'; const ed=$('#emptyDrop'); if(ed) ed.style.display='none'; }
+    const rows=[...list.querySelectorAll('.brow')].filter(x=>x!==drag.row);
+    let before=null; for(const rw of rows){ const b=rw.getBoundingClientRect(); if(e.clientY < b.top+b.height/2){ before=rw; break; } }
+    if(before) list.insertBefore(drag.ph,before); else list.appendChild(drag.ph);
+    // autoscroll
+    if(e.clientY<tr.top+40) top.scrollTop-=8; else if(e.clientY>tr.bottom-40) top.scrollTop+=8;
+  } else if(drag.ph){ drag.ph.remove(); drag.ph=null; const ed=$('#emptyDrop'); if(ed) ed.style.display=''; }
+}
+function endDrag(e){
+  if(!drag) return; const d=drag; drag=null; d.ghost.remove();
+  const h=e.currentTarget; h.onpointermove=h.onpointerup=h.onpointercancel=null;
+  if(d.ph){
+    const list=$('#bList'); const kids=[...list.children].filter(x=>x.classList.contains('brow')&&x!==d.row||x===d.ph);
+    let at=kids.indexOf(d.ph); d.ph.remove();
+    if(d.from==='lib'){ bw.items.splice(at,0,[d.id,{...DEF[d.id]}]); try{navigator.vibrate&&navigator.vibrate(30);}catch(_){} }
+    else { const [it]=bw.items.splice(d.idx,1); bw.items.splice(at,0,it); }
+    openEd=-1;
+  }
+  renderBList();
+}
+
+/* ---------- library ---------- */
+function renderLib(){
+  catChips('#libChips',libCat,c=>{libCat=c;renderLib();});
+  $('#libList').innerHTML = ORDER.filter(id=>inCat(id,libCat)).map(id=>{const e=EX[id];
+    return `<details class="ex"><summary><div class="thumb">${figSVG(id)}</div><div><span class="tag">${e.area}</span><h3>${e.name}</h3><div class="dose">${catOf(id)} · ${TARGETS[id].label}</div></div></summary>
+    <div class="body"><div class="stage">${figSVG(id,'big')}</div>
+    <p style="margin-top:10px"><span class="tgt">● Target: ${TARGETS[id].label}</span></p><p><b>Why:</b> ${e.why}</p>
+    <ol class="how">${e.how.map(h=>`<li>${h}</li>`).join('')}</ol>
+    <div class="note good"><b>You should feel</b>${e.feel}</div>
+    <div class="note warn"><b>Avoid</b>${e.avoid}</div>
+    <button class="btn ghost full" data-try="${id}">▶ Try this exercise</button></div></details>`;}).join('');
+  document.querySelectorAll('[data-try]').forEach(b=>b.onclick=()=>{const id=b.dataset.try; openPlayer({id:null,name:EX[id].name,items:[[id,{...DEF[id]}]]},0,true);});
+  renderReels();
+}
+function renderReels(){
+  const reels=store.get('reels',[]);
+  $('#reelList').innerHTML = reels.length? reels.map((r,i)=>`<div class="reel"><a href="${r.url.replace(/"/g,'')}" target="_blank" rel="noopener">${r.name.replace(/</g,'&lt;')}</a><button class="x" data-i="${i}" aria-label="Remove">×</button></div>`).join('') : '<p class="sub" style="margin:0">No reels saved yet.</p>';
+  document.querySelectorAll('#reelList .x').forEach(b=>b.onclick=()=>{const r=store.get('reels',[]);r.splice(+b.dataset.i,1);store.set('reels',r);renderReels();});
+}
+$('#reelAdd').onclick=()=>{
+  const url=$('#reelUrl').value.trim(); if(!/^https?:\/\//i.test(url)) { $('#reelUrl').focus(); return; }
+  const name=$('#reelName').value.trim()||url.replace(/^https?:\/\/(www\.)?/,'').slice(0,40);
+  const r=store.get('reels',[]); r.push({name,url}); store.set('reels',r);
+  $('#reelUrl').value=''; $('#reelName').value=''; renderReels();
+};
+
+/* ---------- audio ---------- */
+let actx=null;
+function beep(freq=880,dur=.18){ try{ actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+  const o=actx.createOscillator(), g=actx.createGain(); o.frequency.value=freq; o.connect(g); g.connect(actx.destination);
+  g.gain.setValueAtTime(.0001,actx.currentTime); g.gain.exponentialRampToValueAtTime(.3,actx.currentTime+.02); g.gain.exponentialRampToValueAtTime(.0001,actx.currentTime+dur);
+  o.start(); o.stop(actx.currentTime+dur+.02);}catch(e){} try{navigator.vibrate&&navigator.vibrate(120);}catch(e){} }
+let wake=null; async function keepAwake(on){ try{ if(on && navigator.wakeLock){ wake=await navigator.wakeLock.request('screen'); } else if(wake){ wake.release(); wake=null; } }catch(e){} }
+
+/* ---------- player ---------- */
+let pl=null, timer=null;
+function openPlayer(ph, startIdx=0, single=false){
+  try{ actx=actx||new (window.AudioContext||window.webkitAudioContext)(); }catch(e){}
+  pl={ph, idx:startIdx, unit:0, rep:0, single, painBefore:null, stage: single?'ex':'pre', running:false, remain:0, resting:false};
+  $('#player').classList.add('on'); document.body.style.overflow='hidden'; keepAwake(true); drawPlayer();
+}
+function closePlayer(){ clearInterval(timer); timer=null; $('#player').classList.remove('on'); document.body.style.overflow=''; keepAwake(false); renderAll(); }
+function painSlider(id,val){ return `<input type="range" min="0" max="10" value="${val}" id="${id}"><div class="painlabel"><span>0 none</span><span id="${id}v" style="font-weight:700;color:var(--ink)">${val}/10</span><span>10 worst</span></div>`; }
+function bindSlider(id){ const s=$('#'+id); s.oninput=()=>$('#'+id+'v').textContent=s.value+'/10'; }
+
+function drawPlayer(){
+  const box=$('#playerInner'); const ph=pl.ph;
+  const head=`<div class="row" style="justify-content:space-between"><div class="sub" style="flex:1">${ph.name}</div><button class="x" style="flex:0" id="plClose" aria-label="Close">×</button></div>`;
+  if(pl.stage==='pre'){
+    box.innerHTML = head+`<h1>Quick check-in</h1><p class="sub">How bad is your back and leg pain right now?</p><div class="card">${painSlider('pb',3)}</div>
+      <div class="note warn"><b>Remember</b>Stay in the green zone (0–3). If something spreads pain down your leg, skip it.</div>
+      <button class="btn full" id="go">Begin</button>`;
+    bindSlider('pb'); $('#go').onclick=()=>{pl.painBefore=+$('#pb').value; pl.stage='ex'; drawPlayer();};
+  } else if(pl.stage==='ex'){
+    const [id,d]=ph.items[pl.idx]; const e=EX[id]; const sides=d.sides?2:1; const units=d.sets*sides;
+    const setNo=Math.floor(pl.unit/sides)+1, side=d.sides?(pl.unit%2?'Right side':'Left side'):'';
+    const pct = pl.single?0:Math.round((pl.idx/ph.items.length)*100);
+    let ctrl='';
+    if(d.hold){
+      const disp = pl.running||pl.remain ? fmtTime(pl.remain) : fmtTime(d.hold);
+      ctrl = `<div class="big">${disp}</div><div class="sub" style="text-align:center">${pl.resting?'Rest — get ready…':(d.reps>1?`Hold ${pl.rep+1} of ${d.reps}`:'Hold')}</div>
+        <div style="height:12px"></div><button class="btn full" id="tBtn">${pl.running?'❚❚ Pause':(pl.remain?'▶ Resume':'▶ Start timer')}</button>`;
+    } else {
+      ctrl = `<div class="big">${pl.rep}<span class="sub" style="font-size:22px"> / ${d.reps}</span></div>
+        <button class="btn full" id="repBtn" style="padding:22px;font-size:20px">+1 rep</button>`;
+    }
+    box.innerHTML = head + (pl.single?'':`<div class="progressbar"><div style="width:${pct}%"></div></div>`)+
+      `<span class="tag">${pl.single?e.area:`Exercise ${pl.idx+1} of ${ph.items.length}`}</span><h1>${e.name}</h1>
+      <div class="dose" style="margin-bottom:10px">${doseText(d)}${d.note?' · '+d.note:''}</div>
+      <div class="stage">${figSVG(id,'big')}</div><p style="margin:8px 2px 0"><span class="tgt">● Target: ${TARGETS[id].label}</span></p>
+      <div class="card" style="text-align:center"><b>Set ${setNo} of ${d.sets}</b>${side?' · '+side:''}${ctrl}
+        <div class="row" style="margin-top:10px"><button class="btn ghost small" id="prevU">‹ Back</button><button class="btn ghost small" id="nextU">${pl.unit+1<units?'Next set ›':'Next exercise ›'}</button></div></div>
+      <details class="ex" open><summary><h3 style="padding:0 2px">How to do it</h3></summary><div class="body">
+        <ol class="how">${e.how.map(h=>`<li>${h}</li>`).join('')}</ol>
+        <div class="note good"><b>You should feel</b>${e.feel}</div><div class="note warn"><b>Avoid</b>${e.avoid}</div></div></details>
+      ${pl.single?'':`<button class="btn ghost full" id="skip">Skip this exercise</button>`}`;
+    if(d.hold) $('#tBtn').onclick=toggleTimer;
+    else $('#repBtn').onclick=()=>{ pl.rep++; beep(660,.08); if(pl.rep>=d.reps){ beep(990,.25); nextUnit(); } else drawPlayer(); };
+    $('#nextU').onclick=nextUnit; $('#prevU').onclick=prevUnit;
+    if($('#skip')) $('#skip').onclick=nextExercise;
+  } else if(pl.stage==='post'){
+    box.innerHTML = head+`<h1>Routine complete 🎉</h1><p class="sub">Two quick questions so you can track your progress.</p>
+      <div class="card"><h3>Pain now</h3>${painSlider('pa',pl.painBefore??3)}</div>
+      <div class="card"><h3>Your leg symptoms during the session…</h3><div class="seg" id="cent">
+        <button data-v="up">Moved up / eased</button><button data-v="same" class="on">Stayed the same</button><button data-v="down">Spread down</button></div></div>
+      <button class="btn full" id="save">Save & finish</button>`;
+    bindSlider('pa'); let cent='same';
+    document.querySelectorAll('#cent button').forEach(b=>b.onclick=()=>{cent=b.dataset.v;document.querySelectorAll('#cent button').forEach(x=>x.classList.toggle('on',x===b));});
+    $('#save').onclick=()=>{ const log=store.get('log',{}); log[todayKey()]={done:true,wid:pl.ph.id,wname:pl.ph.name,painBefore:pl.painBefore,painAfter:+$('#pa').value,cent}; store.set('log',log);
+      if(cent==='down'){ pl.stage='warn'; drawPlayer(); } else closePlayer(); };
+  } else if(pl.stage==='warn'){
+    box.innerHTML = head+`<h1>Saved — one note</h1><div class="note stop"><b>Symptoms spreading down the leg</b>That usually means one of today's exercises didn't suit you. Tomorrow, try the routine again but skip whichever one triggered it (often knee-to-chest, child's pose or the press-up). If it keeps happening, or you notice numbness or weakness, see a physio or GP. Check the Safety tab for urgent warning signs.</div><button class="btn full" id="ok">OK</button>`;
+    $('#ok').onclick=closePlayer;
+  }
+  $('#plClose').onclick=closePlayer;
+}
+function toggleTimer(){
+  const d=pl.ph.items[pl.idx][1];
+  if(pl.running){ clearInterval(timer); timer=null; pl.running=false; drawPlayer(); return; }
+  if(!pl.remain){ pl.remain=d.hold; pl.resting=false; }
+  pl.running=true; beep(660,.1); let lastT=Date.now();
+  timer=setInterval(()=>{ const now=Date.now(); pl.remain-=(now-lastT)/1000; lastT=now;
+    if(pl.remain<=0){
+      if(pl.resting){ pl.resting=false; pl.remain=d.hold; beep(660,.12); }
+      else { pl.rep++; beep(990,.3);
+        if(pl.rep>=d.reps){ clearInterval(timer); timer=null; pl.running=false; pl.remain=0; nextUnit(); return; }
+        pl.resting=true; pl.remain=4; }
+    }
+    const big=document.querySelector('#playerInner .big'); if(big) big.textContent=fmtTime(pl.remain);
+    const lab=big&&big.nextElementSibling; if(lab) lab.textContent = pl.resting?'Rest — get ready…':(d.reps>1?`Hold ${pl.rep+1} of ${d.reps}`:'Hold');
+  },200);
+  drawPlayer();
+}
+function resetUnitState(){ clearInterval(timer); timer=null; pl.running=false; pl.remain=0; pl.rep=0; pl.resting=false; }
+function nextUnit(){ const d=pl.ph.items[pl.idx][1]; const units=d.sets*(d.sides?2:1); resetUnitState();
+  if(pl.unit+1<units){ pl.unit++; drawPlayer(); } else nextExercise(); }
+function prevUnit(){ resetUnitState(); if(pl.unit>0){ pl.unit--; } else if(!pl.single && pl.idx>0){ pl.idx--; pl.unit=0; } drawPlayer(); }
+function nextExercise(){ resetUnitState(); pl.unit=0;
+  if(pl.single){ closePlayer(); return; }
+  if(pl.idx+1<pl.ph.items.length){ pl.idx++; drawPlayer(); window.scrollTo(0,0); $('#player').scrollTop=0; }
+  else { pl.stage='post'; drawPlayer(); } }
+
+/* ---------- progress ---------- */
+function renderProg(){
+  const log=store.get('log',{}); const keys=Object.keys(log).filter(k=>log[k].done).sort();
+  let streak=0; const d=new Date(); const k=x=>x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0');
+  if(!log[k(d)]) d.setDate(d.getDate()-1);
+  while(log[k(d)]&&log[k(d)].done){ streak++; d.setDate(d.getDate()-1); }
+  const wk=new Date(); wk.setDate(wk.getDate()-6); const week=keys.filter(x=>x>=k(wk)).length;
+  $('#stats').innerHTML=`<div class="stat"><b>${streak}</b><span>day streak</span></div><div class="stat"><b>${week}/7</b><span>this week</span></div><div class="stat"><b>${keys.length}</b><span>total sessions</span></div>`;
+  let g=''; const t=new Date(); const todayK=k(t);
+  for(let i=27;i>=0;i--){ const x=new Date(); x.setDate(t.getDate()-i); const kk=k(x);
+    g+=`<div class="day ${log[kk]&&log[kk].done?'done':''} ${kk===todayK?'today':''}">${x.getDate()}</div>`; }
+  $('#grid28').innerHTML=g;
+  const pts=keys.slice(-30).map(x=>log[x]).filter(x=>x.painAfter!=null);
+  if(pts.length<2){ $('#painChart').innerHTML='<p class="sub" style="margin:0">Complete a couple of sessions to see your pain trend here.</p>'; }
+  else{
+    const W=320,H=140,pad=24, n=pts.length; const X=i=>pad+(W-pad*2)*(i/(n-1)), Y=v=>H-pad-(H-pad*2)*(v/10);
+    const line=key=>pts.map((p,i)=>`${i?'L':'M'}${X(i).toFixed(1)} ${Y(p[key]??0).toFixed(1)}`).join(' ');
+    $('#painChart').innerHTML=`<svg viewBox="0 0 ${W} ${H}" style="width:100%">
+      ${[0,5,10].map(v=>`<line x1="${pad}" x2="${W-pad}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)"/><text x="4" y="${Y(v)+4}" font-size="10" fill="var(--ink2)">${v}</text>`).join('')}
+      <path d="${line('painBefore')}" fill="none" stroke="var(--soft)" stroke-width="2.5" stroke-dasharray="4 3"/>
+      <path d="${line('painAfter')}" fill="none" stroke="var(--accent)" stroke-width="3"/></svg>
+      <div class="sub"><span style="color:var(--accent);font-weight:700">━</span> after session &nbsp; <span style="color:var(--soft);font-weight:700">┅</span> before session</div>`;
+  }
+}
+/* ---------- backup / restore ---------- */
+const BK_KEYS=['workouts','log','reels'];
+function backupData(){ const o={app:'back-rehab',version:1,saved:new Date().toISOString()}; BK_KEYS.forEach(k=>o[k]=store.get(k,k==='log'?{}:[])); return o; }
+$('#bkBtn').onclick=async()=>{
+  const json=JSON.stringify(backupData(),null,1), name='back-rehab-backup-'+todayKey()+'.json';
+  let done=false;
+  try{ const f=new File([json],name,{type:'application/json'});
+    if(navigator.canShare&&navigator.canShare({files:[f]})){ await navigator.share({files:[f],title:'Back Rehab backup'}); done=true; } }catch(e){ if(e&&e.name==='AbortError'){ return; } }
+  if(!done){ try{ const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([json],{type:'application/json'})); a.download=name; document.body.appendChild(a); a.click(); a.remove(); done=true; }catch(e){} }
+  $('#bkMsg').textContent = done ? 'Backup created: '+name : 'Couldn\'t create a file here — open the installed app to back up.';
+};
+$('#rsBtn').onclick=()=>$('#rsFile').click();
+$('#rsFile').onchange=e=>{ const f=e.target.files[0]; if(!f) return; const r=new FileReader();
+  r.onload=()=>{ try{ const o=JSON.parse(r.result); if(o.app!=='back-rehab') throw 0;
+      BK_KEYS.forEach(k=>{ if(o[k]!==undefined) store.set(k,o[k]); });
+      workouts=store.get('workouts',[]); workouts.forEach(w=>w.items=w.items.filter(([id])=>EX[id]));
+      $('#bkMsg').textContent='Restored '+workouts.length+' workout(s) and '+Object.keys(o.log||{}).length+' logged day(s).'; renderAll();
+    }catch(err){ $('#bkMsg').textContent='That file isn\'t a Back Rehab backup.'; } e.target.value=''; };
+  r.readAsText(f); };
+let resetArmed=false;
+$('#resetBtn').onclick=()=>{ if(!resetArmed){ resetArmed=true; $('#resetBtn').textContent='Tap again to confirm'; $('#resetMsg').textContent='This deletes your workouts, log and reels on this device.'; return; }
+  ['log','reels','workouts'].forEach(k=>{try{localStorage.removeItem('br_'+k)}catch(e){}});
+  resetArmed=false; $('#resetBtn').textContent='Clear all my data'; $('#resetMsg').textContent='Cleared.'; workouts=[]; renderAll(); };
+
+/* ---------- tabs ---------- */
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x===b));
+  document.querySelectorAll('.view').forEach(v=>v.classList.toggle('on',v.id==='v-'+b.dataset.v));
+  window.scrollTo(0,0); if(b.dataset.v==='prog') renderProg();
+});
+function renderAll(){ renderToday(); renderLib(); renderProg(); }
+renderAll();
+</script>
+<script>
+if('serviceWorker' in navigator && (location.protocol==='https:'||location.hostname==='localhost') && window.top===window){
+  const hadSW = !!navigator.serviceWorker.controller;
+  function showUpdate(){
+    if(document.getElementById('updBar')) return;
+    const b=document.createElement('div'); b.id='updBar';
+    b.style.cssText='position:fixed;left:12px;right:12px;bottom:calc(76px + env(safe-area-inset-bottom));z-index:9999;background:#1f6f5c;color:#fff;border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:10px;box-shadow:0 6px 24px rgba(0,0,0,.25);font:600 15px system-ui,-apple-system,sans-serif';
+    b.innerHTML='<span style="flex:1">New version available</span><button style="background:#fff;color:#1f6f5c;border:0;border-radius:10px;padding:8px 14px;font:700 14px system-ui,-apple-system,sans-serif">Update</button>';
+    b.querySelector('button').onclick=()=>location.reload();
+    document.body.appendChild(b);
+  }
+  // a new service worker took over (it activates straight away) -> offer a one-tap reload
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{ if(hadSW) showUpdate(); });
+  window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').then(reg=>{
+    // check for a new version whenever the app is opened or brought back to the front
+    const check=()=>reg.update().catch(()=>{});
+    document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible') check(); });
+    setInterval(check, 30*60*1000);
+  }).catch(()=>{}));
+}
+</script>
+</body>
+</html>
