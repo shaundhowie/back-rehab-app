@@ -482,12 +482,12 @@ const EX = {
   why:"A gentle, supported straddle: gravity slowly opens the inner thighs (adductors) and hips while your back rests flat on the floor.",
   how:["Lie on your back with your buttocks close to a wall and your legs straight up the wall.","Let your legs slowly open out to the sides into a wide V, heels resting on the wall. A slight bend in the knees is fine.","Rest your arms out to the sides, relax your shoulders and breathe slowly.","Hold, letting gravity open the legs a little more as you relax. To come out, use your hands to bring your knees together before rolling to the side."],
   feel:"A gentle stretch along the inner thighs and groin.", avoid:"Forcing the legs wider or bouncing. If you feel tingling or numbness in the legs, bend your knees and bring the legs together."},
- latjump:{name:"Lateral jumps",area:"Agility",period:1600,latJump:true,props:["tapeline"],
+ latjump:{name:"Lateral jumps (bounds)",area:"Agility",period:1600,latJump:true,props:["tapeline"],
   A:{head:[100,15],sh:[100,27],hip:[100,64],kn:[111,84],ft:[110,103],knF:[89,84],ftF:[90,103],el:[114,45],hd:[116,58],elF:[86,45],hdF:[84,58]},
   B:{head:[100,24],sh:[100,36],hip:[100,72],kn:[113,86],ft:[110,103],knF:[87,86],ftF:[90,103],el:[115,52],hd:[112,64],elF:[85,52],hdF:[88,64]},
   why:"A basic plyometric for side-to-side power and quick, controlled landings — trains the hips, knees and ankles to absorb and redirect force in the plane we rarely train.",
-  how:["Stand beside a line on the floor (or a low cone), feet hip-width, knees soft, arms ready.","Jump sideways over the line with both feet together, swinging your arms.","Land softly on the balls of your feet in a ready position — knees bent over your toes, chest up — then jump straight back over.","Keep the jumps small and quick at first; go higher or faster only once landings are quiet and controlled."],
-  feel:"Calves, thighs and glutes working; heart rate up.", avoid:"Landing stiff-legged, flat-footed or with knees caving inward. Skip it if jumping jars your back or brings on leg symptoms — step side to side instead."},
+  how:["Stand on one leg beside a line on the floor, knee slightly bent, arms ready.","Push off that foot and jump sideways over the line.","Land softly on the other foot with a slight bend in the knee, letting the free leg lift behind you. Hold the landing for a moment — balanced, chest up, knee over your toes.","Push straight back off that foot to land on the first one. Keep the bounds small and controlled at first."],
+  feel:"Calves, thighs and glutes working; heart rate up.", avoid:"Landing stiff-legged or with the knee caving inward. Skip it if jumping jars your back or brings on leg symptoms — step side to side instead."},
  sidelunge:{name:"Side lunge",area:"Mobility",period:4500,
   A:{head:[100,19],sh:[100,31],hip:[100,68],kn:[117,86],ft:[130,103],knF:[78,86],ftF:[58,103],el:[111,51],hd:[102,46],elF:[89,51],hdF:[98,46]},
   B:{head:[119,44],sh:[120,56],hip:[124,90],kn:[140,80],ft:[130,103],knF:[90,96],ftF:[58,101],el:[132,70],hd:[120,64],elF:[110,70],hdF:[118,64]},
@@ -760,10 +760,15 @@ function viewBoxFor(id){ const e=EX[id]; if(e.vb) return e.vb;
 function figSVG(id, cls=''){ return `<svg class="fig ${cls}" viewBox="${viewBoxFor(id)}" data-ex="${id}" role="img" aria-label="${EX[id].name} illustration">${figMarkup(EX[id].A, id)}</svg>`; }
 const ease=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
 function poseAt(ex,ts,t){
-  if(ex.latJump){ const u=(ts%ex.period)/ex.period, w=2*Math.PI*u, x=-13*Math.cos(w), s2=Math.sin(w)**2, h=13*s2, c=Math.cos(w)**2;
-    const q=interp(ex.A,ex.B,1-c*0.85-s2*0.15), o={};
+  if(ex.latJump){ const u=(ts%ex.period)/ex.period, w=2*Math.PI*u, a=Math.cos(w), x=-14*a, s2=Math.sin(w)**2, h=9*s2, c=a*a;
+    const q=interp(ex.A,ex.B,0.5*c), o={}, mix=(p1,p2,k)=>[p1[0]+(p2[0]-p1[0])*k, p1[1]+(p2[1]-p1[1])*k];
     for(const k in q){ if(Array.isArray(q[k])) o[k]=[q[k][0]+x, q[k][1]-h]; }
-    if(h>1){ for(const [kk,ff] of [['kn','ft'],['knF','ftF']]){ o[ff]=[o[ff][0]+(kk==='kn'?-3:3)*s2, o[ff][1]-5*s2]; } }
+    const L=Math.pow(Math.max(0,a),0.6), R=Math.pow(Math.max(0,-a),0.6), bend=3*c;
+    const airF=[[96+x,82-h],[97+x,96-h]], airR=[[104+x,82-h],[103+x,96-h]];
+    const kF=mix(mix(airF[0],[104+x,78-h],R),[95+x,83+bend-h],L), fF=mix(mix(airF[1],[109+x,88-h],R),[96+x,103-h],L);
+    const kR=mix(mix(airR[0],[96+x,78-h],L),[105+x,83+bend-h],R), fR=mix(mix(airR[1],[91+x,88-h],L),[104+x,103-h],R);
+    o.knF=kF; o.ftF=fF; o.kn=kR; o.ft=fR;
+    o.el=[o.el[0]-4*a,o.el[1]]; o.hd=[o.hd[0]-7*a,o.hd[1]]; o.elF=[o.elF[0]-4*a,o.elF[1]]; o.hdF=[o.hdF[0]-7*a,o.hdF[1]];
     return Object.assign(q,o); }
   const p=interp(ex.A,ex.B,t);
   if(ex.armCircle){ const u=(ts%ex.period)/ex.period, th=2*Math.PI*u, s=ex.A.sh, dx=Math.sin(th), dy=Math.cos(th);
