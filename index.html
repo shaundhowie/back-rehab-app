@@ -476,6 +476,12 @@ const EX = {
   why:"Opens and strengthens the front of the thighs (quads) and hip flexors together — the quads have to work to control the lean, so you gain usable range, not just a passive stretch.",
   how:["Kneel tall on a soft mat, knees hip-width, tops of your feet flat on the floor. Squeeze your glutes so your knees, hips and shoulders are in one straight line.","Reach your arms forward for balance and slowly lean back from the knees, keeping that straight line — don't bend at the hips.","Go only as far as you can control (work to your range), pause briefly.","Use your quads to pull yourself back up to tall kneeling. Repeat for about 5 reps."],
   feel:"Strong stretch and work along the front of your thighs and hip flexors.", avoid:"Arching your lower back or sitting your hips back toward your heels. Keep the range small if your knees complain, and stop if it brings on back or leg symptoms."},
+ wallsplit:{name:"Wall splits",area:"Stretch",period:6000,props:["wall"],
+  A:{head:[40,93],sh:[53,97],mid:[73,97],hip:[93,98],kn:[99,77],ft:[96,57],knF:[91,78],ftF:[94,58],el:[54,104],hd:[58,104],elF:[52,90],hdF:[48,86]},
+  B:{head:[40,93],sh:[53,97],mid:[73,97],hip:[93,98],kn:[99,77],ft:[96,57],knF:[91,78],ftF:[94,58],el:[54,104],hd:[58,104],elF:[52,90],hdF:[48,86]},
+  why:"A gentle, supported straddle: gravity slowly opens the inner thighs (adductors) and hips while your back rests flat on the floor.",
+  how:["Lie on your back with your buttocks close to a wall and your legs straight up the wall.","Let your legs slowly open out to the sides into a wide V, heels resting on the wall. A slight bend in the knees is fine.","Rest your arms out to the sides, relax your shoulders and breathe slowly.","Hold, letting gravity open the legs a little more as you relax. To come out, use your hands to bring your knees together before rolling to the side."],
+  feel:"A gentle stretch along the inner thighs and groin.", avoid:"Forcing the legs wider or bouncing. If you feel tingling or numbness in the legs, bend your knees and bring the legs together."},
  sidelunge:{name:"Side lunge",area:"Mobility",period:4500,
   A:{head:[100,19],sh:[100,31],hip:[100,68],kn:[117,86],ft:[130,103],knF:[78,86],ftF:[58,103],el:[111,51],hd:[102,46],elF:[89,51],hdF:[98,46]},
   B:{head:[119,44],sh:[120,56],hip:[124,90],kn:[140,80],ft:[130,103],knF:[90,96],ftF:[58,101],el:[132,70],hd:[120,64],elF:[110,70],hdF:[118,64]},
@@ -516,13 +522,13 @@ const DEF = { tilt:{sets:2,reps:10}, catcow:{sets:1,reps:10}, glide:{sets:2,reps
  worlds:{sets:1,reps:5,hold:5,sides:true}, downdog:{sets:1,reps:3,hold:30}, sphinx:{sets:1,reps:2,hold:45},
  lowlunge:{sets:1,reps:2,hold:30,sides:true}, pigeon:{sets:1,reps:1,hold:45,sides:true}, happybaby:{sets:1,reps:1,hold:45}, seatfold:{sets:1,reps:2,hold:30},
  standfold:{sets:1,reps:2,hold:20}, tree:{sets:1,reps:1,hold:30,sides:true}, warrior2:{sets:1,reps:2,hold:30,sides:true},
- butterfly:{sets:1,reps:2,hold:30}, legsup:{sets:1,reps:1,hold:180}, quadstand:{sets:1,reps:2,hold:30,sides:true}, couch:{sets:1,reps:2,hold:45,sides:true}, ballob:{"sets": 2, "reps": 1, "hold": 30}, skip:{"sets": 4, "reps": 1, "hold": 30}, ladder1:{"sets": 1, "reps": 4}, ladder2:{"sets": 1, "reps": 4}, ladder3:{"sets": 1, "reps": 4}, hipstep:{"sets":1,"reps":1,"hold":60,"sides":true}, crabreach:{"sets": 1, "reps": 6, "sides": true}, tyson:{sets:2,reps:6}, bridgeesc:{sets:2,reps:6,sides:true}, sidelunge:{sets:2,reps:8,sides:true}, invpush:{sets:2,reps:8}, plankroll:{sets:3,reps:20}, backbend:{sets:2,reps:8}, nordic:{sets:3,reps:5}, backext:{sets:3,reps:10}, rdl:{sets:3,reps:8}, revhyper:{sets:3,reps:12}, activequad:{sets:1,reps:5}, squathams:{"sets": 2, "reps": 8}, shcars:{"sets": 1, "reps": 5, "sides": true}, wallslide:{"sets": 2, "reps": 10}, hip9090:{"sets": 2, "reps": 8}, frog:{sets:1,reps:6,hold:5}
+ butterfly:{sets:1,reps:2,hold:30}, legsup:{sets:1,reps:1,hold:180}, quadstand:{sets:1,reps:2,hold:30,sides:true}, couch:{sets:1,reps:2,hold:45,sides:true}, ballob:{"sets": 2, "reps": 1, "hold": 30}, skip:{"sets": 4, "reps": 1, "hold": 30}, ladder1:{"sets": 1, "reps": 4}, ladder2:{"sets": 1, "reps": 4}, ladder3:{"sets": 1, "reps": 4}, hipstep:{"sets":1,"reps":1,"hold":60,"sides":true}, crabreach:{"sets": 1, "reps": 6, "sides": true}, tyson:{sets:2,reps:6}, bridgeesc:{sets:2,reps:6,sides:true}, sidelunge:{sets:2,reps:8,sides:true}, invpush:{sets:2,reps:8}, plankroll:{sets:3,reps:20}, backbend:{sets:2,reps:8}, nordic:{sets:3,reps:5}, backext:{sets:3,reps:10}, rdl:{sets:3,reps:8}, revhyper:{sets:3,reps:12}, activequad:{sets:1,reps:5}, wallsplit:{sets:1,reps:1,hold:90}, squathams:{"sets": 2, "reps": 8}, shcars:{"sets": 1, "reps": 5, "sides": true}, wallslide:{"sets": 2, "reps": 10}, hip9090:{"sets": 2, "reps": 8}, frog:{sets:1,reps:6,hold:5}
 };
 const CATS = {
  'Rehab':['tilt','glide','press','bridge','walk'],
  'Mobility':["shcars","wallslide","hip9090","crabreach","squathams","hipstep","tyson","bridgeesc","sidelunge","invpush"],
  'Core & strength':['birddog','deadbug','sideplank','plankroll','backbend','nordic','backext','rdl','revhyper'],
- 'Stretch':['worlds','k2c','fig4','hipflex','hams','quadstand','couch','frog','activequad'],
+ 'Stretch':['worlds','k2c','fig4','hipflex','hams','quadstand','couch','frog','activequad','wallsplit'],
  'Yoga':['catcow','child','downdog','sphinx','lowlunge','pigeon','happybaby','butterfly','seatfold','standfold','tree','warrior2','legsup'],
  'Agility':["skip", "ladder1", "ladder2", "ladder3", "ballob"]
 };
@@ -542,6 +548,7 @@ function interp(A,B,t){ const o={}; const keys=new Set([...Object.keys(A),...Obj
   keys.forEach(k=>{ const base=/F$/.test(k)?k.slice(0,-1):null; const a=A[k]||(base&&A[base])||B[k], b=B[k]||(base&&B[base])||A[k]; o[k]=lerp(a,b,t); }); return o; }
 const pt=p=>p[0].toFixed(1)+' '+p[1].toFixed(1);
 const TARGETS = { // which muscles light up + front direction of torso (1/-1) tilt:{t:['abs','back'],f:-1,label:'Deep core · lumbar spine'},
+ wallsplit:{t:['farleg'],f:-1,label:'Inner thighs (adductors) · hips'},
  activequad:{t:['quads'],f:1,label:'Quads · hip flexors'},
  revhyper:{t:['glutes','hams','back'],f:1,label:'Glutes · hamstrings · low back'},
  rdl:{t:['hams','glutes','back'],f:-1,label:'Hamstrings · glutes · back extensors'},
