@@ -458,6 +458,12 @@ const EX = {
   why:"Strengthens the back extensors together with the glutes and hamstrings through a controlled hip hinge — endurance in these muscles protects the lower back.",
   how:["Set the hip pad on the 45° back extension (or Nordic back extension) machine so it sits just below your hip bones, with your ankles locked under the roller and feet on the plate.","Cross your arms over your chest. Keep your back neutral and core braced.","Hinge at the hips and lower your upper body toward the floor, keeping your back flat.","Squeeze your glutes to rise back up until your body is in one straight line — stop there, don't arch past it."],
   feel:"Work in the lower back, glutes and backs of the thighs.", avoid:"Arching past a straight line at the top, rounding your low back at the bottom, or jerking. Move slowly; add weight (held at the chest) only once bodyweight is easy and pain-free."},
+ rdl:{name:"Romanian deadlift (barbell)",area:"Strength",period:5000,props:["barbell"],
+  A:{head:[101,12],sh:[100,24],mid:[100,42],hip:[100,60],kn:[102,82],ft:[100,104],el:[103,43],hd:[104,61]},
+  B:{head:[123,35],sh:[112,40],mid:[97,47],hip:[82,56],kn:[104,80],ft:[100,104],el:[112,60],hd:[110,80]},
+  why:"The key hip-hinge strength exercise: builds the glutes, hamstrings and back extensors while teaching you to bend from the hips with a neutral spine — the pattern that protects your back when lifting in daily life.",
+  how:["Stand tall, feet hip-width, holding the barbell at the front of your thighs with an overhand grip just outside your legs. Knees soft, shoulders back, core braced.","Push your hips straight back and let the bar slide down the front of your thighs, keeping it close to your legs and your back flat.","Lower until you feel a strong hamstring stretch — around the knees or just below — without your back rounding.","Drive your hips forward and squeeze your glutes to stand tall again. Don't lean back at the top."],
+  feel:"Strong stretch and work in the hamstrings and glutes; back muscles holding a flat back.", avoid:"Rounding the lower back, letting the bar drift away from your legs, or going lower than you can keep a flat back. Start light (an empty bar), and skip it during a flare-up or if it sends symptoms down your leg."},
  sidelunge:{name:"Side lunge",area:"Mobility",period:4500,
   A:{head:[100,19],sh:[100,31],hip:[100,68],kn:[117,86],ft:[130,103],knF:[78,86],ftF:[58,103],el:[111,51],hd:[102,46],elF:[89,51],hdF:[98,46]},
   B:{head:[119,44],sh:[120,56],hip:[124,90],kn:[140,80],ft:[130,103],knF:[90,96],ftF:[58,101],el:[132,70],hd:[120,64],elF:[110,70],hdF:[118,64]},
@@ -498,12 +504,12 @@ const DEF = { tilt:{sets:2,reps:10}, catcow:{sets:1,reps:10}, glide:{sets:2,reps
  worlds:{sets:1,reps:5,hold:5,sides:true}, downdog:{sets:1,reps:3,hold:30}, sphinx:{sets:1,reps:2,hold:45},
  lowlunge:{sets:1,reps:2,hold:30,sides:true}, pigeon:{sets:1,reps:1,hold:45,sides:true}, happybaby:{sets:1,reps:1,hold:45}, seatfold:{sets:1,reps:2,hold:30},
  standfold:{sets:1,reps:2,hold:20}, tree:{sets:1,reps:1,hold:30,sides:true}, warrior2:{sets:1,reps:2,hold:30,sides:true},
- butterfly:{sets:1,reps:2,hold:30}, legsup:{sets:1,reps:1,hold:180}, quadstand:{sets:1,reps:2,hold:30,sides:true}, couch:{sets:1,reps:2,hold:45,sides:true}, ballob:{"sets": 2, "reps": 1, "hold": 30}, skip:{"sets": 4, "reps": 1, "hold": 30}, ladder1:{"sets": 1, "reps": 4}, ladder2:{"sets": 1, "reps": 4}, ladder3:{"sets": 1, "reps": 4}, hipstep:{"sets":1,"reps":1,"hold":60,"sides":true}, crabreach:{"sets": 1, "reps": 6, "sides": true}, tyson:{sets:2,reps:6}, bridgeesc:{sets:2,reps:6,sides:true}, sidelunge:{sets:2,reps:8,sides:true}, invpush:{sets:2,reps:8}, plankroll:{sets:3,reps:20}, backbend:{sets:2,reps:8}, nordic:{sets:3,reps:5}, backext:{sets:3,reps:10}, squathams:{"sets": 2, "reps": 8}, shcars:{"sets": 1, "reps": 5, "sides": true}, wallslide:{"sets": 2, "reps": 10}, hip9090:{"sets": 2, "reps": 8}, frog:{sets:1,reps:6,hold:5}
+ butterfly:{sets:1,reps:2,hold:30}, legsup:{sets:1,reps:1,hold:180}, quadstand:{sets:1,reps:2,hold:30,sides:true}, couch:{sets:1,reps:2,hold:45,sides:true}, ballob:{"sets": 2, "reps": 1, "hold": 30}, skip:{"sets": 4, "reps": 1, "hold": 30}, ladder1:{"sets": 1, "reps": 4}, ladder2:{"sets": 1, "reps": 4}, ladder3:{"sets": 1, "reps": 4}, hipstep:{"sets":1,"reps":1,"hold":60,"sides":true}, crabreach:{"sets": 1, "reps": 6, "sides": true}, tyson:{sets:2,reps:6}, bridgeesc:{sets:2,reps:6,sides:true}, sidelunge:{sets:2,reps:8,sides:true}, invpush:{sets:2,reps:8}, plankroll:{sets:3,reps:20}, backbend:{sets:2,reps:8}, nordic:{sets:3,reps:5}, backext:{sets:3,reps:10}, rdl:{sets:3,reps:8}, squathams:{"sets": 2, "reps": 8}, shcars:{"sets": 1, "reps": 5, "sides": true}, wallslide:{"sets": 2, "reps": 10}, hip9090:{"sets": 2, "reps": 8}, frog:{sets:1,reps:6,hold:5}
 };
 const CATS = {
  'Rehab':['tilt','glide','press','bridge','walk'],
  'Mobility':["shcars","wallslide","hip9090","crabreach","squathams","hipstep","tyson","bridgeesc","sidelunge","invpush"],
- 'Core & strength':['birddog','deadbug','sideplank','plankroll','backbend','nordic','backext'],
+ 'Core & strength':['birddog','deadbug','sideplank','plankroll','backbend','nordic','backext','rdl'],
  'Stretch':['worlds','k2c','fig4','hipflex','hams','quadstand','couch','frog'],
  'Yoga':['catcow','child','downdog','sphinx','lowlunge','pigeon','happybaby','butterfly','seatfold','standfold','tree','warrior2','legsup'],
  'Agility':["skip", "ladder1", "ladder2", "ladder3", "ballob"]
@@ -524,6 +530,7 @@ function interp(A,B,t){ const o={}; const keys=new Set([...Object.keys(A),...Obj
   keys.forEach(k=>{ const base=/F$/.test(k)?k.slice(0,-1):null; const a=A[k]||(base&&A[base])||B[k], b=B[k]||(base&&B[base])||A[k]; o[k]=lerp(a,b,t); }); return o; }
 const pt=p=>p[0].toFixed(1)+' '+p[1].toFixed(1);
 const TARGETS = { // which muscles light up + front direction of torso (1/-1) tilt:{t:['abs','back'],f:-1,label:'Deep core · lumbar spine'},
+ rdl:{t:['hams','glutes','back'],f:-1,label:'Hamstrings · glutes · back extensors'},
  nordic:{t:['hams','glutes'],f:1,label:'Hamstrings · glutes'},
  backext:{t:['back','glutes','hams'],f:1,label:'Low back · glutes · hamstrings'},
  backbend:{t:['back','hams'],f:-1,label:'Back extensors · hamstrings'},
@@ -702,6 +709,7 @@ function figMarkup(pose, id, big=false, other=null){
   if(props.includes('stick')) s += `<circle cx="${pose.hd[0].toFixed(1)}" cy="${pose.hd[1].toFixed(1)}" r="4.5" fill="none" stroke="#c9a36b" stroke-width="2.5"/>`;
   if(props.includes('dowel')){ const nb=nrm(pose.sh,pose.hip).map(v=>v*-T.f*9); const a=[pose.head[0]+nb[0]*.5,pose.head[1]+nb[1]*.5], b=[pose.hip[0]+nb[0],pose.hip[1]+nb[1]]; const e1=lerp(b,a,1.18), e0=lerp(a,b,1.12); s += `<path d="M${pt(e1)} L${pt(e0)}" stroke="#c9a36b" stroke-width="2.6" stroke-linecap="round"/>`; }
   if(props.includes('rope')&&pose.r1) s += `<path d="M${pt(pose.hd)} C${pt(pose.r1)} ${pt(pose.r2)} ${pt(pose.hdF||pose.hd)}" stroke="#9bd2ff" stroke-width="1.6" fill="none"/>`;
+  if(props.includes('barbell')){ const h=pose.hd; s += `<g><rect x="${(h[0]-1.2).toFixed(1)}" y="${(h[1]-4).toFixed(1)}" width="2.4" height="8" rx="1" fill="#6b6f75"/><circle cx="${h[0].toFixed(1)}" cy="${h[1].toFixed(1)}" r="11" fill="#2f3439"/><circle cx="${h[0].toFixed(1)}" cy="${h[1].toFixed(1)}" r="7.5" fill="#3d434a"/><circle cx="${h[0].toFixed(1)}" cy="${h[1].toFixed(1)}" r="2" fill="#9aa1a8"/></g>`; }
   if(props.includes('strap')) s += `<path d="M${pt(pose.hd)} L${pt(pose.ft)}" stroke="#7fd1bd" stroke-width="2" stroke-dasharray="4 3"/>`;
   return s;
 }
