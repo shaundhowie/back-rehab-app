@@ -524,8 +524,8 @@ function interp(A,B,t){ const o={}; const keys=new Set([...Object.keys(A),...Obj
   keys.forEach(k=>{ const base=/F$/.test(k)?k.slice(0,-1):null; const a=A[k]||(base&&A[base])||B[k], b=B[k]||(base&&B[base])||A[k]; o[k]=lerp(a,b,t); }); return o; }
 const pt=p=>p[0].toFixed(1)+' '+p[1].toFixed(1);
 const TARGETS = { // which muscles light up + front direction of torso (1/-1) tilt:{t:['abs','back'],f:-1,label:'Deep core · lumbar spine'},
- nordic:{t:['hams','glutes'],f:-1,label:'Hamstrings · glutes'},
- backext:{t:['back','glutes','hams'],f:-1,label:'Low back · glutes · hamstrings'},
+ nordic:{t:['hams','glutes'],f:1,label:'Hamstrings · glutes'},
+ backext:{t:['back','glutes','hams'],f:1,label:'Low back · glutes · hamstrings'},
  backbend:{t:['back','hams'],f:-1,label:'Back extensors · hamstrings'},
  plankroll:{t:['obliques','abs'],f:1,label:'Obliques · deep core'},
  invpush:{t:['glutes','arm','back'],f:-1,label:'Front shoulders · glutes · upper back'},
